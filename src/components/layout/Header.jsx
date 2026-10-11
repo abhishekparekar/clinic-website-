@@ -50,7 +50,7 @@ export function Header() {
   ];
 
   return (
-    <header style={{ position: 'sticky', top: 0, zIndex: 1000, width: '100%', boxShadow: '0 4px 20px rgba(0, 0, 0, 0.06)' }}>
+    <header className="site-header" style={{ position: 'sticky', top: 0, zIndex: 1000, width: '100%', boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08)' }}>
       {/* Top Radiant Linear Gradient Accent Bar */}
       <div style={{
         height: '3px',
