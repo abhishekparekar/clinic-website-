@@ -68,10 +68,10 @@ export function PrivacyPolicyPage() {
 
             <div>
               <h2 style={{ fontSize: '1.5rem', marginBottom: '0.75rem', color: 'var(--primary)' }}>
-                4. Multi-Tenant Data Isolation & Security
+                4. Data Security & Access Controls
               </h2>
               <p style={{ color: 'var(--text-muted)' }}>
-                Our website utilizes strict tenant-partitioned database security rules. Appointment requests submitted for <strong>{tenant?.name}</strong> are stored in a dedicated partition accessible exclusively to authenticated, authorized medical staff of this clinic tenant. All web interactions are encrypted end-to-end via Transport Layer Security (TLS/HTTPS).
+                Our website utilizes strict database encryption and security controls. Appointment requests submitted for <strong>{tenant?.name}</strong> are stored in a protected system accessible exclusively to authenticated, authorized medical staff of our clinic. All web interactions are encrypted end-to-end via Transport Layer Security (TLS/HTTPS).
               </p>
             </div>
 

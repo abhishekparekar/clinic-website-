@@ -128,7 +128,7 @@ export function AdminLoginPage() {
             fontWeight: 700
           }}>
             <Building2 size={13} />
-            <span>Tenant: {tenant?.name}</span>
+            <span>{tenant?.name}</span>
           </div>
         </div>
 
@@ -152,7 +152,7 @@ export function AdminLoginPage() {
               style={{ fontSize: '0.75rem', padding: '0.4rem 0.5rem' }}
             >
               <Sparkles size={12} color="var(--primary)" />
-              <span>Tenant Admin</span>
+              <span>Clinic Admin</span>
             </button>
             <button
               type="button"

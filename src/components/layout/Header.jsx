@@ -8,16 +8,12 @@ import {
   Calendar, 
   Menu, 
   X, 
-  Building2, 
-  ChevronDown,
-  Sparkles,
   Lock
 } from 'lucide-react';
 
 export function Header() {
-  const { tenant, allTenants, switchTenant } = useTenant();
+  const { tenant } = useTenant();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [tenantDropdownOpen, setTenantDropdownOpen] = useState(false);
 
   // Close mobile drawer and dropdown on window resize if enlarged
   useEffect(() => {
@@ -96,102 +92,36 @@ export function Header() {
             </a>
           </div>
 
-          {/* Tenant Switcher & Staff Portal Link */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-            {/* Multi-Tenant Switcher */}
-            <div style={{ position: 'relative' }}>
-              <button 
-                onClick={() => setTenantDropdownOpen(!tenantDropdownOpen)}
-                style={{ 
-                  display: 'flex', 
-                  alignItems: 'center', 
-                  gap: '0.35rem', 
-                  background: 'rgba(255,255,255,0.12)', 
-                  color: '#FFFFFF', 
-                  padding: '0.25rem 0.65rem', 
-                  borderRadius: '9999px',
-                  fontSize: '0.75rem',
-                  fontWeight: 600
-                }}
-                title="Switch Clinic Tenant (PRD FR-01)"
-              >
-                <Building2 size={12} style={{ color: 'var(--accent)' }} />
-                <span>{tenant?.name?.split(' ')[0]}</span>
-                <ChevronDown size={11} />
-              </button>
+          {/* Clinic Location & Staff Portal Link */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
+            <span style={{ fontSize: '0.785rem', color: '#CBD5E1', display: 'none' }} className="header-location-desktop">
+              {tenant?.contact?.address ? tenant.contact.address.split(',').slice(1, 3).join(', ') : 'Bandra West, Mumbai'}
+            </span>
+            <style>{`
+              @media (min-width: 640px) {
+                .header-location-desktop { display: inline !important; }
+              }
+            `}</style>
 
-              {tenantDropdownOpen && (
-                <div style={{
-                  position: 'absolute',
-                  right: 0,
-                  top: '100%',
-                  marginTop: '0.4rem',
-                  background: '#FFFFFF',
-                  color: '#0F172A',
-                  borderRadius: '10px',
-                  boxShadow: 'var(--shadow-xl)',
-                  border: '1px solid #E2E8F0',
-                  minWidth: '240px',
-                  zIndex: 1000,
-                  overflow: 'hidden'
-                }}>
-                  <div style={{ padding: '0.5rem 0.75rem', background: '#F8FAFC', borderBottom: '1px solid #E2E8F0', fontSize: '0.7rem', fontWeight: 700, color: '#64748B', textTransform: 'uppercase' }}>
-                    Select Clinic Tenant (PRD FR-01)
-                  </div>
-                  {allTenants.map(t => (
-                    <button
-                      key={t.id}
-                      onClick={() => {
-                        switchTenant(t.id);
-                        setTenantDropdownOpen(false);
-                      }}
-                      style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                        width: '100%',
-                        padding: '0.65rem 0.85rem',
-                        textAlign: 'left',
-                        fontSize: '0.8rem',
-                        color: t.id === tenant.id ? 'var(--primary)' : '#1E293B',
-                        background: t.id === tenant.id ? 'var(--primary-light)' : 'transparent',
-                        fontWeight: t.id === tenant.id ? 700 : 500,
-                        borderBottom: '1px solid #F1F5F9'
-                      }}
-                    >
-                      <div>
-                        <div>{t.name}</div>
-                        <div style={{ fontSize: '0.7rem', color: '#64748B' }}>{t.contact?.address?.split(',')[2] || t.slug}</div>
-                      </div>
-                      {t.id === tenant.id && <Sparkles size={13} color="var(--primary)" />}
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            {/* Admin Login Link */}
             <Link 
               to="/admin" 
               style={{ 
-                display: 'none', 
+                display: 'inline-flex', 
                 alignItems: 'center', 
-                gap: '0.3rem', 
-                color: '#94A3B8', 
+                gap: '0.35rem', 
+                color: '#E2E8F0', 
                 fontSize: '0.75rem',
-                textDecoration: 'none'
+                textDecoration: 'none',
+                background: 'rgba(255,255,255,0.1)',
+                padding: '0.25rem 0.65rem',
+                borderRadius: '9999px',
+                fontWeight: 600
               }}
-              className="header-staff-link"
               title="Clinic Staff Portal"
             >
               <Lock size={12} />
-              <span>Portal</span>
+              <span>Staff Portal</span>
             </Link>
-            <style>{`
-              @media (min-width: 640px) {
-                .header-staff-link { display: inline-flex !important; }
-              }
-            `}</style>
           </div>
 
         </div>

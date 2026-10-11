@@ -229,7 +229,7 @@ export function AdminLayout() {
               <Menu size={20} />
             </button>
             <span style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>
-              Tenant Workspace: <strong style={{ color: 'var(--text-main)' }}>{tenant?.name}</strong>
+              Clinic Workspace: <strong style={{ color: 'var(--text-main)' }}>{tenant?.name}</strong>
             </span>
           </div>
 
