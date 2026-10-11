@@ -67,14 +67,14 @@ export function AdminLoginPage() {
       alignItems: 'center',
       justifyContent: 'center',
       background: 'linear-gradient(135deg, #0F172A 0%, #1E293B 100%)',
-      padding: '2rem 1.5rem'
+      padding: 'clamp(1rem, 3vw, 2rem) clamp(0.75rem, 2.5vw, 1.5rem)'
     }}>
       <div style={{
         maxWidth: '460px',
         width: '100%',
         background: '#FFFFFF',
-        borderRadius: 'var(--radius-xl)',
-        padding: '2.5rem',
+        borderRadius: '4px',
+        padding: 'clamp(1.25rem, 4vw, 2.25rem)',
         boxShadow: 'var(--shadow-xl)',
         position: 'relative'
       }}>
@@ -86,33 +86,33 @@ export function AdminLoginPage() {
             display: 'inline-flex', 
             alignItems: 'center', 
             gap: '0.4rem', 
-            fontSize: '0.85rem', 
+            fontSize: '0.825rem', 
             color: 'var(--text-subtle)', 
-            marginBottom: '1.5rem',
+            marginBottom: '1.25rem',
             textDecoration: 'none'
           }}
         >
-          <ArrowLeft size={16} /> Return to Public Website
+          <ArrowLeft size={15} /> Return to Public Website
         </Link>
 
         {/* Header */}
-        <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
+        <div style={{ textAlign: 'center', marginBottom: '1.75rem' }}>
           <div style={{
-            width: '54px',
-            height: '54px',
-            borderRadius: '14px',
+            width: '50px',
+            height: '50px',
+            borderRadius: '4px',
             background: 'var(--gradient-primary)',
             color: '#FFFFFF',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            margin: '0 auto 1rem auto',
+            margin: '0 auto 0.85rem auto',
             boxShadow: '0 4px 14px rgba(15, 118, 110, 0.4)'
           }}>
-            <Lock size={26} />
+            <Lock size={24} />
           </div>
 
-          <h1 style={{ fontSize: '1.65rem', color: 'var(--text-main)', marginBottom: '0.35rem' }}>
+          <h1 style={{ fontSize: 'clamp(1.3rem, 3vw, 1.6rem)', color: 'var(--text-main)', marginBottom: '0.35rem' }}>
             Staff & Admin Sign In
           </h1>
 
@@ -120,8 +120,8 @@ export function AdminLoginPage() {
             display: 'inline-flex', 
             alignItems: 'center', 
             gap: '0.4rem', 
-            padding: '0.25rem 0.75rem', 
-            borderRadius: '9999px',
+            padding: '0.25rem 0.65rem', 
+            borderRadius: '4px',
             background: 'var(--primary-light)',
             color: 'var(--primary)',
             fontSize: '0.75rem',
@@ -135,21 +135,21 @@ export function AdminLoginPage() {
         {/* Demo Fast-Login Buttons for Evaluator Convenience */}
         <div style={{ 
           background: '#F8FAFC', 
-          border: '1.5px dashed var(--border-light)', 
-          borderRadius: '12px', 
-          padding: '1rem', 
-          marginBottom: '1.75rem',
+          border: '1px dashed var(--border-light)', 
+          borderRadius: '4px', 
+          padding: '0.875rem', 
+          marginBottom: '1.5rem',
           textAlign: 'center'
         }}>
-          <div style={{ fontSize: '0.75rem', fontWeight: 700, color: '#64748B', textTransform: 'uppercase', marginBottom: '0.65rem' }}>
+          <div style={{ fontSize: '0.725rem', fontWeight: 700, color: '#64748B', textTransform: 'uppercase', marginBottom: '0.5rem' }}>
             One-Click Evaluation Credentials
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: '0.5rem' }}>
             <button
               type="button"
               onClick={() => handleQuickLogin('admin')}
               className="btn btn-secondary btn-sm"
-              style={{ fontSize: '0.75rem', padding: '0.4rem 0.5rem' }}
+              style={{ fontSize: '0.75rem', padding: '0.4rem 0.5rem', borderRadius: '4px' }}
             >
               <Sparkles size={12} color="var(--primary)" />
               <span>Clinic Admin</span>
@@ -158,7 +158,7 @@ export function AdminLoginPage() {
               type="button"
               onClick={() => handleQuickLogin('staff')}
               className="btn btn-secondary btn-sm"
-              style={{ fontSize: '0.75rem', padding: '0.4rem 0.5rem' }}
+              style={{ fontSize: '0.75rem', padding: '0.4rem 0.5rem', borderRadius: '4px' }}
             >
               <Sparkles size={12} color="var(--primary)" />
               <span>Front Desk Staff</span>
@@ -172,7 +172,7 @@ export function AdminLoginPage() {
             background: '#FEF2F2',
             border: '1px solid #FCA5A5',
             color: '#DC2626',
-            borderRadius: '8px',
+            borderRadius: '4px',
             padding: '0.75rem 1rem',
             fontSize: '0.85rem',
             marginBottom: '1.25rem',

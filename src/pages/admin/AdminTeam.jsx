@@ -16,59 +16,98 @@ export function AdminTeam() {
         </p>
       </div>
 
-      <div style={{ background: '#FFFFFF', borderRadius: 'var(--radius-lg)', border: '1px solid var(--border-light)', overflow: 'hidden', marginBottom: '2rem' }}>
-        <div className="table-responsive">
-          <table className="data-table">
-            <thead>
-              <tr>
-                <th>Staff Name</th>
-                <th>Authorized Email</th>
-                <th>System Role</th>
-                <th>Permissions Summary</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {members.map(member => (
-                <tr key={member.uid}>
-                  <td>
-                    <strong>{member.name}</strong>
-                  </td>
-                  <td>{member.email}</td>
-                  <td>
-                    <span className="badge" style={{
-                      background: member.role === 'tenantAdmin' ? '#E0F2FE' : '#F1F5F9',
-                      color: member.role === 'tenantAdmin' ? '#0284C7' : '#475569',
-                      fontWeight: 700
-                    }}>
-                      {member.role === 'tenantAdmin' ? 'Tenant Administrator' : 'Front Desk Staff'}
-                    </span>
-                  </td>
-                  <td style={{ fontSize: '0.8rem', color: '#64748B' }}>
-                    {member.role === 'tenantAdmin' 
-                      ? 'Full Access: Manage Enquiries, Treatments, Dentists, FAQs, Clinic Branding, Team'
-                      : 'Operational Access: View & Update Appointment Enquiry Status & Staff Notes (Read-only CMS)'}
-                  </td>
-                  <td>
-                    <span className="badge badge-active">
-                      {member.active ? 'Active' : 'Deactivated'}
-                    </span>
-                  </td>
+      {/* Desktop / Tablet Table View */}
+      <div className="admin-desktop-table" style={{ marginBottom: '1.5rem' }}>
+        <div style={{ background: '#FFFFFF', borderRadius: '4px', border: '1px solid var(--border-light)', overflow: 'hidden' }}>
+          <div className="table-responsive">
+            <table className="data-table">
+              <thead>
+                <tr>
+                  <th>Staff Name</th>
+                  <th>Authorized Email</th>
+                  <th>System Role</th>
+                  <th>Permissions Summary</th>
+                  <th>Status</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {members.map(member => (
+                  <tr key={member.uid}>
+                    <td>
+                      <strong>{member.name}</strong>
+                    </td>
+                    <td>{member.email}</td>
+                    <td>
+                      <span className="badge" style={{
+                        background: member.role === 'tenantAdmin' ? '#E0F2FE' : '#F1F5F9',
+                        color: member.role === 'tenantAdmin' ? '#0284C7' : '#475569',
+                        fontWeight: 700,
+                        borderRadius: '4px'
+                      }}>
+                        {member.role === 'tenantAdmin' ? 'Tenant Administrator' : 'Front Desk Staff'}
+                      </span>
+                    </td>
+                    <td style={{ fontSize: '0.8rem', color: '#64748B' }}>
+                      {member.role === 'tenantAdmin' 
+                        ? 'Full Access: Manage Enquiries, Treatments, Dentists, FAQs, Clinic Branding, Team'
+                        : 'Operational Access: View & Update Appointment Enquiry Status & Staff Notes (Read-only CMS)'}
+                    </td>
+                    <td>
+                      <span className="badge badge-active" style={{ borderRadius: '4px' }}>
+                        {member.active ? 'Active' : 'Deactivated'}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
 
-      {/* Security notice regarding PRD Section 9 & 12 */}
+      {/* Mobile Card View (< 768px) */}
+      <div className="admin-mobile-cards" style={{ marginBottom: '1.5rem' }}>
+        {members.map(member => (
+          <div key={member.uid} className="admin-mobile-card">
+            <div className="admin-mobile-card-header">
+              <div>
+                <strong style={{ fontSize: '1rem', color: 'var(--text-main)' }}>{member.name}</strong>
+                <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>{member.email}</div>
+              </div>
+              <span className="badge badge-active" style={{ borderRadius: '4px' }}>
+                {member.active ? 'Active' : 'Deactivated'}
+              </span>
+            </div>
+
+            <div className="admin-mobile-card-row">
+              <span style={{ color: 'var(--text-muted)' }}>Role:</span>
+              <span className="badge" style={{
+                background: member.role === 'tenantAdmin' ? '#E0F2FE' : '#F1F5F9',
+                color: member.role === 'tenantAdmin' ? '#0284C7' : '#475569',
+                fontWeight: 700,
+                borderRadius: '4px'
+              }}>
+                {member.role === 'tenantAdmin' ? 'Tenant Administrator' : 'Front Desk Staff'}
+              </span>
+            </div>
+
+            <div style={{ fontSize: '0.8rem', color: '#64748B', lineHeight: 1.5, background: '#F8FAFC', padding: '0.65rem 0.75rem', borderRadius: '4px', border: '1px solid var(--border-light)' }}>
+              <strong>Permissions:</strong>{' '}
+              {member.role === 'tenantAdmin'
+                ? 'Full Access: Manage Enquiries, Treatments, Dentists, FAQs, Clinic Branding, Team'
+                : 'Operational Access: View & Update Appointment Enquiry Status & Staff Notes'}
+            </div>
+          </div>
+        ))}
+      </div>
+
       <div style={{
         background: '#F0FDFA',
-        border: '1.5px solid #CCFBF1',
-        borderRadius: 'var(--radius-md)',
-        padding: '1.5rem',
+        border: '1px solid #CCFBF1',
+        borderRadius: '4px',
+        padding: 'clamp(1rem, 2.5vw, 1.25rem)',
         display: 'flex',
-        gap: '1rem',
+        gap: '0.875rem',
         alignItems: 'flex-start'
       }}>
         <Lock size={22} color="#0F766E" style={{ flexShrink: 0, marginTop: '2px' }} />

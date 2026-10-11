@@ -126,68 +126,128 @@ export function AdminServices() {
         </button>
       </div>
 
-      {/* Services Table */}
-      <div className="table-responsive" style={{ boxShadow: 'var(--shadow-sm)' }}>
-        <table className="data-table">
-          <thead>
-            <tr>
-              <th>Treatment Name</th>
-              <th>Category</th>
-              <th>Typical Duration</th>
-              <th>Pricing Hint</th>
-              <th>Status</th>
-              <th style={{ textAlign: 'right' }}>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {services.map(srv => (
-              <tr key={srv.id}>
-                <td>
-                  <strong>{srv.name}</strong>
-                  <div style={{ fontSize: '0.75rem', color: '#64748B' }}>/services/{srv.slug}</div>
-                </td>
-                <td>
-                  <span className="badge" style={{ background: '#F1F5F9', color: '#334155' }}>
-                    {srv.category}
-                  </span>
-                </td>
-                <td>{srv.duration}</td>
-                <td>{srv.priceEstimate || 'On Consultation'}</td>
-                <td>
-                  <button 
-                    onClick={() => togglePublish(srv)}
-                    style={{ cursor: 'pointer' }}
-                    title="Click to toggle publish status"
-                  >
-                    <span className={`badge ${srv.published ? 'badge-active' : 'badge-draft'}`}>
-                      {srv.published ? 'Published' : 'Draft'}
-                    </span>
-                  </button>
-                </td>
-                <td style={{ textAlign: 'right' }}>
-                  <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.5rem' }}>
-                    <button 
-                      onClick={() => openEditModal(srv)} 
-                      className="btn-icon" 
-                      style={{ color: 'var(--primary)', border: '1px solid var(--border-light)' }}
-                      title="Edit Treatment"
-                    >
-                      <Edit3 size={15} />
-                    </button>
-                    <button 
-                      onClick={() => handleDelete(srv)} 
-                      className="btn-icon" 
-                      style={{ color: '#DC2626', border: '1px solid var(--border-light)' }}
-                      title="Delete Treatment"
-                    >
-                      <Trash2 size={15} />
-                    </button>
-                  </div>
-                </td>
+      {/* Services Desktop Table */}
+      <div className="admin-desktop-table">
+        <div className="table-responsive" style={{ boxShadow: 'var(--shadow-sm)' }}>
+          <table className="data-table">
+            <thead>
+              <tr>
+                <th>Treatment Name</th>
+                <th>Category</th>
+                <th>Typical Duration</th>
+                <th>Pricing Hint</th>
+                <th>Status</th>
+                <th style={{ textAlign: 'right' }}>Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {services.map(srv => (
+                <tr key={srv.id}>
+                  <td>
+                    <strong>{srv.name}</strong>
+                    <div style={{ fontSize: '0.75rem', color: '#64748B' }}>/services/{srv.slug}</div>
+                  </td>
+                  <td>
+                    <span className="badge" style={{ background: '#F1F5F9', color: '#334155', borderRadius: '4px' }}>
+                      {srv.category}
+                    </span>
+                  </td>
+                  <td>{srv.duration}</td>
+                  <td>{srv.priceEstimate || 'On Consultation'}</td>
+                  <td>
+                    <button 
+                      onClick={() => togglePublish(srv)}
+                      style={{ cursor: 'pointer', background: 'none', border: 'none', padding: 0 }}
+                      title="Click to toggle publish status"
+                    >
+                      <span className={`badge ${srv.published ? 'badge-active' : 'badge-draft'}`}>
+                        {srv.published ? 'Published' : 'Draft'}
+                      </span>
+                    </button>
+                  </td>
+                  <td style={{ textAlign: 'right' }}>
+                    <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.4rem' }}>
+                      <button 
+                        onClick={() => openEditModal(srv)} 
+                        className="btn-icon" 
+                        style={{ color: 'var(--primary)', border: '1px solid var(--border-light)', borderRadius: '4px' }}
+                        title="Edit Treatment"
+                      >
+                        <Edit3 size={14} />
+                      </button>
+                      <button 
+                        onClick={() => handleDelete(srv)} 
+                        className="btn-icon" 
+                        style={{ color: '#DC2626', border: '1px solid var(--border-light)', borderRadius: '4px' }}
+                        title="Delete Treatment"
+                      >
+                        <Trash2 size={14} />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {/* Services Mobile Cards (< 768px) */}
+      <div className="admin-mobile-cards">
+        {services.map(srv => (
+          <div key={srv.id} className="admin-mobile-card">
+            <div className="admin-mobile-card-header">
+              <div>
+                <strong style={{ fontSize: '1rem', color: 'var(--text-main)' }}>{srv.name}</strong>
+                <div style={{ fontSize: '0.75rem', color: '#64748B' }}>/services/{srv.slug}</div>
+              </div>
+              <button 
+                onClick={() => togglePublish(srv)}
+                style={{ cursor: 'pointer', background: 'none', border: 'none', padding: 0 }}
+              >
+                <span className={`badge ${srv.published ? 'badge-active' : 'badge-draft'}`}>
+                  {srv.published ? 'Published' : 'Draft'}
+                </span>
+              </button>
+            </div>
+
+            <div className="admin-mobile-card-row">
+              <span style={{ color: 'var(--text-muted)' }}>Category:</span>
+              <span className="badge" style={{ background: '#F1F5F9', color: '#334155', borderRadius: '4px' }}>
+                {srv.category}
+              </span>
+            </div>
+
+            <div className="admin-mobile-card-row">
+              <span style={{ color: 'var(--text-muted)' }}>Duration:</span>
+              <span style={{ color: 'var(--text-main)' }}>{srv.duration}</span>
+            </div>
+
+            <div className="admin-mobile-card-row">
+              <span style={{ color: 'var(--text-muted)' }}>Pricing:</span>
+              <span style={{ color: 'var(--text-main)', fontWeight: 600 }}>{srv.priceEstimate || 'On Consultation'}</span>
+            </div>
+
+            <div className="admin-mobile-card-actions">
+              <button 
+                onClick={() => openEditModal(srv)} 
+                className="btn btn-secondary btn-sm"
+                style={{ flex: 1, justifyContent: 'center' }}
+              >
+                <Edit3 size={13} />
+                <span>Edit</span>
+              </button>
+              <button 
+                onClick={() => handleDelete(srv)} 
+                className="btn btn-secondary btn-sm"
+                style={{ color: '#DC2626', padding: '0.4rem 0.75rem' }}
+              >
+                <Trash2 size={13} />
+                <span>Delete</span>
+              </button>
+            </div>
+          </div>
+        ))}
       </div>
 
       {/* Add / Edit Treatment Modal */}
@@ -209,7 +269,7 @@ export function AdminServices() {
         }
       >
         <form onSubmit={handleSave}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 220px), 1fr))', gap: '1rem' }}>
             <div className="form-group">
               <label className="form-label" htmlFor="srvName">
                 Treatment Name <span className="required">*</span>
@@ -246,7 +306,7 @@ export function AdminServices() {
             </div>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 220px), 1fr))', gap: '1rem' }}>
             <div className="form-group">
               <label className="form-label" htmlFor="srvDuration">
                 Estimated Chair Duration

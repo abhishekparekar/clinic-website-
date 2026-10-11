@@ -64,22 +64,22 @@ export function AdminSettings() {
       <form onSubmit={handleSave} style={{ maxWidth: '900px' }}>
         
         {/* Branding & Visual Identity (Theme Colors) */}
-        <div style={{ background: '#FFFFFF', borderRadius: 'var(--radius-lg)', padding: '2rem', border: '1px solid var(--border-light)', marginBottom: '2rem' }}>
-          <h2 style={{ fontSize: '1.25rem', marginBottom: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <Palette size={20} color="var(--primary)" />
+        <div style={{ background: '#FFFFFF', borderRadius: '4px', padding: 'clamp(1rem, 3vw, 1.75rem)', border: '1px solid var(--border-light)', marginBottom: '1.5rem', boxShadow: 'var(--shadow-sm)' }}>
+          <h2 style={{ fontSize: '1.15rem', marginBottom: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--text-main)' }}>
+            <Palette size={19} color="var(--primary)" />
             Linear Gradient Theme & Branding Tokens
           </h2>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1.5rem', marginBottom: '1.5rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 220px), 1fr))', gap: '1.25rem', marginBottom: '1.25rem' }}>
             <div className="form-group">
               <label className="form-label" htmlFor="primaryColor">Primary Theme Color</label>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
                 <input
                   type="color"
                   id="primaryColor"
                   value={formData.primaryColor}
                   onChange={(e) => setFormData({ ...formData, primaryColor: e.target.value })}
-                  style={{ width: '44px', height: '44px', borderRadius: '8px', border: 'none', cursor: 'pointer' }}
+                  style={{ width: '42px', height: '42px', borderRadius: '4px', border: 'none', cursor: 'pointer' }}
                 />
                 <input
                   type="text"
@@ -92,13 +92,13 @@ export function AdminSettings() {
 
             <div className="form-group">
               <label className="form-label" htmlFor="accentColor">Accent Gradient Color</label>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
                 <input
                   type="color"
                   id="accentColor"
                   value={formData.accentColor}
                   onChange={(e) => setFormData({ ...formData, accentColor: e.target.value })}
-                  style={{ width: '44px', height: '44px', borderRadius: '8px', border: 'none', cursor: 'pointer' }}
+                  style={{ width: '42px', height: '42px', borderRadius: '4px', border: 'none', cursor: 'pointer' }}
                 />
                 <input
                   type="text"
@@ -114,31 +114,33 @@ export function AdminSettings() {
           <div style={{
             background: `linear-gradient(135deg, ${formData.primaryColor} 0%, ${formData.accentColor} 100%)`,
             color: '#FFFFFF',
-            padding: '1.25rem 1.5rem',
-            borderRadius: '12px',
+            padding: '1.1rem 1.25rem',
+            borderRadius: '4px',
             display: 'flex',
+            flexWrap: 'wrap',
             alignItems: 'center',
             justifyContent: 'space-between',
-            boxShadow: 'var(--shadow-md)'
+            gap: '0.75rem',
+            boxShadow: 'var(--shadow-sm)'
           }}>
             <div>
-              <div style={{ fontWeight: 700, fontSize: '1.1rem' }}>Live Dynamic Gradient Preview</div>
-              <div style={{ fontSize: '0.8rem', opacity: 0.9 }}>Applied immediately to public buttons, badges, and accents upon save</div>
+              <div style={{ fontWeight: 700, fontSize: '1rem' }}>Live Dynamic Gradient Preview</div>
+              <div style={{ fontSize: '0.775rem', opacity: 0.9 }}>Applied immediately to public buttons, badges, and accents upon save</div>
             </div>
-            <button type="button" className="btn btn-secondary btn-sm" style={{ background: '#FFFFFF', color: formData.primaryColor }}>
+            <button type="button" className="btn btn-secondary btn-sm" style={{ background: '#FFFFFF', color: formData.primaryColor, borderRadius: '4px' }}>
               Sample Button
             </button>
           </div>
         </div>
 
         {/* General Details */}
-        <div style={{ background: '#FFFFFF', borderRadius: 'var(--radius-lg)', padding: '2rem', border: '1px solid var(--border-light)', marginBottom: '2rem' }}>
-          <h2 style={{ fontSize: '1.25rem', marginBottom: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <Settings size={20} color="var(--primary)" />
+        <div style={{ background: '#FFFFFF', borderRadius: '4px', padding: 'clamp(1rem, 3vw, 1.75rem)', border: '1px solid var(--border-light)', marginBottom: '1.5rem', boxShadow: 'var(--shadow-sm)' }}>
+          <h2 style={{ fontSize: '1.15rem', marginBottom: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--text-main)' }}>
+            <Settings size={19} color="var(--primary)" />
             Clinic Identity & Contact Information
           </h2>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 260px), 1fr))', gap: '1.25rem' }}>
             <div className="form-group">
               <label className="form-label" htmlFor="clinicName">Clinic Legal Display Name</label>
               <input
@@ -163,7 +165,7 @@ export function AdminSettings() {
             </div>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1.5rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 220px), 1fr))', gap: '1.25rem' }}>
             <div className="form-group">
               <label className="form-label" htmlFor="phone">Phone Number</label>
               <input
@@ -237,9 +239,9 @@ export function AdminSettings() {
         </div>
 
         {/* SEO Meta Tags */}
-        <div style={{ background: '#FFFFFF', borderRadius: 'var(--radius-lg)', padding: '2rem', border: '1px solid var(--border-light)', marginBottom: '2rem' }}>
-          <h2 style={{ fontSize: '1.25rem', marginBottom: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <Globe size={20} color="var(--primary)" />
+        <div style={{ background: '#FFFFFF', borderRadius: '4px', padding: 'clamp(1rem, 3vw, 1.75rem)', border: '1px solid var(--border-light)', marginBottom: '1.5rem', boxShadow: 'var(--shadow-sm)' }}>
+          <h2 style={{ fontSize: '1.15rem', marginBottom: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--text-main)' }}>
+            <Globe size={19} color="var(--primary)" />
             Search Engine Optimization (SEO Defaults)
           </h2>
 
@@ -267,7 +269,7 @@ export function AdminSettings() {
         </div>
 
         {/* Submit */}
-        <button type="submit" className="btn btn-primary btn-lg">
+        <button type="submit" className="btn btn-primary btn-lg" style={{ width: 'min(100%, 280px)', justifyContent: 'center' }}>
           <Save size={18} />
           <span>Save Clinic Settings</span>
         </button>

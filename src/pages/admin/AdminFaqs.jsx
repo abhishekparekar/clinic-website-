@@ -89,50 +89,54 @@ export function AdminFaqs() {
         </button>
       </div>
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.875rem' }}>
         {faqs.map(faq => (
           <div 
             key={faq.id}
             style={{
               background: '#FFFFFF',
-              borderRadius: 'var(--radius-md)',
+              borderRadius: '4px',
               border: '1px solid var(--border-light)',
-              padding: '1.25rem 1.5rem',
+              padding: 'clamp(1rem, 2.5vw, 1.25rem)',
               display: 'flex',
+              flexWrap: 'wrap',
               alignItems: 'flex-start',
               justifyContent: 'space-between',
-              gap: '1.5rem'
+              gap: '1rem',
+              boxShadow: 'var(--shadow-sm)'
             }}
           >
-            <div style={{ flex: 1 }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
-                <span className="badge" style={{ background: '#F1F5F9', color: '#475569' }}>
+            <div style={{ flex: '1 1 260px', minWidth: 0 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.4rem', flexWrap: 'wrap' }}>
+                <span className="badge" style={{ background: '#F1F5F9', color: '#475569', borderRadius: '4px' }}>
                   {faq.category}
                 </span>
                 <span className={`badge ${faq.published ? 'badge-active' : 'badge-draft'}`}>
                   {faq.published ? 'Published' : 'Draft'}
                 </span>
               </div>
-              <h3 style={{ fontSize: '1.1rem', color: 'var(--text-main)', marginBottom: '0.5rem' }}>
+              <h3 style={{ fontSize: '1.05rem', color: 'var(--text-main)', marginBottom: '0.4rem', lineHeight: 1.4 }}>
                 {faq.question}
               </h3>
-              <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', lineHeight: 1.6 }}>
+              <p style={{ fontSize: '0.875rem', color: 'var(--text-muted)', lineHeight: 1.6 }}>
                 {faq.answer}
               </p>
             </div>
 
-            <div style={{ display: 'flex', gap: '0.5rem' }}>
+            <div style={{ display: 'flex', gap: '0.4rem', alignSelf: 'flex-start', flexShrink: 0 }}>
               <button 
                 onClick={() => openEditModal(faq)} 
                 className="btn-icon" 
-                style={{ color: 'var(--primary)', border: '1px solid var(--border-light)' }}
+                style={{ color: 'var(--primary)', border: '1px solid var(--border-light)', borderRadius: '4px', padding: '0.4rem' }}
+                title="Edit FAQ"
               >
                 <Edit3 size={15} />
               </button>
               <button 
                 onClick={() => handleDelete(faq)} 
                 className="btn-icon" 
-                style={{ color: '#DC2626', border: '1px solid var(--border-light)' }}
+                style={{ color: '#DC2626', border: '1px solid var(--border-light)', borderRadius: '4px', padding: '0.4rem' }}
+                title="Delete FAQ"
               >
                 <Trash2 size={15} />
               </button>

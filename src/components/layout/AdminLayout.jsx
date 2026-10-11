@@ -63,7 +63,7 @@ export function AdminLayout() {
         left: 0,
         zIndex: 960,
         transform: sidebarOpen ? 'translateX(0)' : 'translateX(-100%)',
-        transition: 'transform 0.25s ease',
+        transition: 'transform 0.25s cubic-bezier(0.16, 1, 0.3, 1)',
         boxShadow: 'var(--shadow-xl)'
       }} className="admin-sidebar">
         <style>{`
@@ -72,40 +72,59 @@ export function AdminLayout() {
             .admin-main-wrap { margin-left: 260px !important; }
             .admin-menu-toggle { display: none !important; }
           }
+          @media (max-width: 640px) {
+            .admin-workspace-full { display: none !important; }
+            .admin-view-site-text { display: none !important; }
+          }
+          @media (min-width: 641px) {
+            .admin-workspace-short { display: none !important; }
+          }
         `}</style>
 
         {/* Brand Header */}
-        <div style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
+        <div style={{ padding: '1.25rem', borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.75rem' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
               <div style={{
-                width: '36px',
-                height: '36px',
-                borderRadius: '8px',
+                width: '34px',
+                height: '34px',
+                borderRadius: '4px',
                 background: 'var(--gradient-primary)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 color: '#FFFFFF'
               }}>
-                <Lock size={18} />
+                <Lock size={17} />
               </div>
-              <span style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '1.1rem' }}>
+              <span style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '1.05rem', letterSpacing: '-0.01em' }}>
                 Clinic Portal
               </span>
             </div>
             <button 
               onClick={() => setSidebarOpen(false)}
               className="admin-menu-toggle"
-              style={{ color: '#94A3B8' }}
+              style={{ 
+                color: '#94A3B8', 
+                background: 'rgba(255,255,255,0.08)',
+                border: 'none',
+                borderRadius: '4px',
+                width: '32px',
+                height: '32px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                cursor: 'pointer' 
+              }}
+              aria-label="Close menu"
             >
-              <X size={20} />
+              <X size={18} />
             </button>
           </div>
 
           <div style={{ 
             background: 'rgba(255,255,255,0.06)', 
-            borderRadius: '8px', 
+            borderRadius: '4px', 
             padding: '0.5rem 0.75rem', 
             display: 'flex', 
             alignItems: 'center', 
@@ -113,7 +132,7 @@ export function AdminLayout() {
             fontSize: '0.75rem',
             color: 'var(--accent)'
           }}>
-            <Building2 size={14} />
+            <Building2 size={14} style={{ flexShrink: 0 }} />
             <span style={{ fontWeight: 600, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
               {tenant?.name}
             </span>
@@ -121,7 +140,7 @@ export function AdminLayout() {
         </div>
 
         {/* Navigation Items */}
-        <nav style={{ padding: '1.25rem 0.75rem', flex: 1, display: 'flex', flexDirection: 'column', gap: '0.35rem', overflowY: 'auto' }}>
+        <nav style={{ padding: '1rem 0.65rem', flex: 1, display: 'flex', flexDirection: 'column', gap: '0.25rem', overflowY: 'auto' }}>
           {navItems.map((item) => {
             const Icon = item.icon;
             if (item.adminOnly && !isTenantAdmin) return null;
@@ -136,8 +155,8 @@ export function AdminLayout() {
                   display: 'flex',
                   alignItems: 'center',
                   gap: '0.75rem',
-                  padding: '0.75rem 0.9rem',
-                  borderRadius: '8px',
+                  padding: '0.7rem 0.85rem',
+                  borderRadius: '4px',
                   fontSize: '0.875rem',
                   fontWeight: isActive ? 600 : 500,
                   color: isActive ? '#FFFFFF' : '#94A3B8',
@@ -146,7 +165,7 @@ export function AdminLayout() {
                   transition: 'background 0.15s ease'
                 })}
               >
-                <Icon size={18} />
+                <Icon size={18} style={{ flexShrink: 0 }} />
                 <span>{item.label}</span>
               </NavLink>
             );
@@ -154,18 +173,19 @@ export function AdminLayout() {
         </nav>
 
         {/* Footer / User Profile & Logout */}
-        <div style={{ padding: '1.25rem', borderTop: '1px solid rgba(255,255,255,0.08)' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
+        <div style={{ padding: '1rem 1.25rem', borderTop: '1px solid rgba(255,255,255,0.08)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.85rem' }}>
             <div style={{
-              width: '36px',
-              height: '36px',
-              borderRadius: '50%',
+              width: '34px',
+              height: '34px',
+              borderRadius: '4px',
               background: '#334155',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               fontWeight: 700,
-              fontSize: '0.85rem'
+              fontSize: '0.85rem',
+              color: '#FFFFFF'
             }}>
               {user.name ? user.name[0] : 'U'}
             </div>
@@ -174,7 +194,7 @@ export function AdminLayout() {
                 {user.name}
               </div>
               <div style={{ fontSize: '0.7rem', color: '#94A3B8', textTransform: 'capitalize' }}>
-                {user.role === 'tenantAdmin' ? 'Tenant Administrator' : 'Front Desk Staff'}
+                {user.role === 'tenantAdmin' ? 'Tenant Admin' : 'Staff / Reception'}
               </div>
             </div>
           </div>
@@ -187,8 +207,9 @@ export function AdminLayout() {
               justifyContent: 'center',
               gap: '0.5rem',
               width: '100%',
-              padding: '0.6rem',
-              borderRadius: '6px',
+              padding: '0.55rem',
+              borderRadius: '4px',
+              border: 'none',
               background: 'rgba(239, 68, 68, 0.15)',
               color: '#F87171',
               fontSize: '0.8rem',
@@ -204,60 +225,70 @@ export function AdminLayout() {
       </aside>
 
       {/* Main Content Area */}
-      <div className="admin-main-wrap" style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0 }}>
+      <div className="admin-main-wrap" style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0, width: '100%' }}>
         
         {/* Top Header */}
         <header style={{
-          height: '65px',
+          minHeight: '60px',
+          height: '60px',
           background: '#FFFFFF',
           borderBottom: '1px solid var(--border-light)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          padding: '0 1.5rem',
+          padding: '0 clamp(0.75rem, 2vw, 1.5rem)',
           position: 'sticky',
           top: 0,
-          zIndex: 800
+          zIndex: 800,
+          boxShadow: '0 1px 3px rgba(0,0,0,0.03)'
         }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', minWidth: 0 }}>
             <button 
               onClick={() => setSidebarOpen(true)}
               className="admin-menu-toggle btn-icon"
-              style={{ color: 'var(--text-main)', border: '1px solid var(--border-light)' }}
+              style={{ color: 'var(--text-main)', border: '1px solid var(--border-light)', borderRadius: '4px', padding: '0.4rem' }}
               aria-label="Toggle menu"
             >
-              <Menu size={20} />
+              <Menu size={18} />
             </button>
-            <span style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>
-              Clinic Workspace: <strong style={{ color: 'var(--text-main)' }}>{tenant?.name}</strong>
-            </span>
+            <div style={{ fontSize: '0.875rem', color: 'var(--text-muted)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+              <span className="admin-workspace-full">
+                Workspace: <strong style={{ color: 'var(--text-main)' }}>{tenant?.name}</strong>
+              </span>
+              <span className="admin-workspace-short">
+                <strong style={{ color: 'var(--text-main)' }}>{tenant?.name}</strong>
+              </span>
+            </div>
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexShrink: 0 }}>
             <Link
               to="/"
               target="_blank"
               style={{
                 display: 'inline-flex',
                 alignItems: 'center',
-                gap: '0.4rem',
+                gap: '0.35rem',
                 fontSize: '0.8rem',
                 fontWeight: 600,
                 color: 'var(--primary)',
-                padding: '0.4rem 0.8rem',
-                borderRadius: '6px',
+                padding: '0.4rem 0.75rem',
+                borderRadius: '4px',
                 background: 'var(--primary-light)',
-                textDecoration: 'none'
+                textDecoration: 'none',
+                whiteSpace: 'nowrap'
               }}
+              title="Open public website in a new tab"
             >
-              <span>View Public Website</span>
+              <span className="admin-view-site-text">View Website</span>
+              <span className="admin-workspace-short">Site</span>
               <ExternalLink size={13} />
             </Link>
           </div>
         </header>
 
         {/* Dynamic Admin Sub-Page */}
-        <main style={{ padding: '2rem 1.5rem', flex: 1 }}>
+        <main className="admin-main-content">
           <Outlet />
         </main>
       </div>

@@ -119,29 +119,31 @@ export function AdminDoctors() {
 
       <div style={{
         display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-        gap: '1.5rem'
+        gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))',
+        gap: '1.25rem'
       }}>
         {doctors.map(doc => (
           <div 
             key={doc.id}
             style={{
               background: '#FFFFFF',
-              borderRadius: 'var(--radius-lg)',
+              borderRadius: '4px',
               border: '1px solid var(--border-light)',
-              padding: '1.5rem',
+              padding: 'clamp(1rem, 2.5vw, 1.25rem)',
               display: 'flex',
-              gap: '1.25rem',
-              position: 'relative'
+              flexWrap: 'wrap',
+              gap: '1rem',
+              position: 'relative',
+              boxShadow: 'var(--shadow-sm)'
             }}
           >
-            <div style={{ width: '80px', height: '80px', borderRadius: '12px', overflow: 'hidden', flexShrink: 0 }}>
+            <div style={{ width: '72px', height: '72px', borderRadius: '4px', overflow: 'hidden', flexShrink: 0 }}>
               <img src={doc.photoUrl} alt={doc.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
             </div>
 
-            <div style={{ flex: 1, minWidth: 0 }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                <h3 style={{ fontSize: '1.15rem', color: 'var(--text-main)', marginBottom: '0.2rem' }}>
+            <div style={{ flex: '1 1 180px', minWidth: 0 }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '0.5rem' }}>
+                <h3 style={{ fontSize: '1.1rem', color: 'var(--text-main)', marginBottom: '0.2rem' }}>
                   {doc.name}
                 </h3>
                 <span className={`badge ${doc.published ? 'badge-active' : 'badge-draft'}`}>
@@ -149,11 +151,11 @@ export function AdminDoctors() {
                 </span>
               </div>
 
-              <div style={{ fontSize: '0.825rem', fontWeight: 600, color: 'var(--primary)', marginBottom: '0.5rem' }}>
+              <div style={{ fontSize: '0.825rem', fontWeight: 600, color: 'var(--primary)', marginBottom: '0.35rem' }}>
                 {doc.role}
               </div>
 
-              <div style={{ fontSize: '0.75rem', color: '#64748B', marginBottom: '0.5rem' }}>
+              <div style={{ fontSize: '0.75rem', color: '#64748B', marginBottom: '0.35rem' }}>
                 {doc.qualifications?.join(' • ')}
               </div>
 
@@ -161,18 +163,18 @@ export function AdminDoctors() {
                 Roster: {doc.scheduleDays}
               </div>
 
-              <div style={{ display: 'flex', gap: '0.5rem', marginTop: '1rem', paddingTop: '0.75rem', borderTop: '1px solid var(--border-light)' }}>
+              <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.875rem', paddingTop: '0.75rem', borderTop: '1px solid var(--border-light)' }}>
                 <button 
                   onClick={() => openEditModal(doc)}
                   className="btn btn-secondary btn-sm"
-                  style={{ padding: '0.3rem 0.6rem', fontSize: '0.75rem' }}
+                  style={{ flex: 1, justifyContent: 'center', fontSize: '0.775rem', padding: '0.35rem 0.6rem' }}
                 >
                   <Edit3 size={13} /> Edit
                 </button>
                 <button 
                   onClick={() => handleDelete(doc)}
                   className="btn btn-secondary btn-sm"
-                  style={{ padding: '0.3rem 0.6rem', fontSize: '0.75rem', color: '#DC2626' }}
+                  style={{ fontSize: '0.775rem', padding: '0.35rem 0.6rem', color: '#DC2626' }}
                 >
                   <Trash2 size={13} /> Remove
                 </button>
@@ -198,7 +200,7 @@ export function AdminDoctors() {
         }
       >
         <form onSubmit={handleSave}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 220px), 1fr))', gap: '1rem' }}>
             <div className="form-group">
               <label className="form-label" htmlFor="docName">Full Name & Title <span className="required">*</span></label>
               <input
@@ -236,7 +238,7 @@ export function AdminDoctors() {
             />
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 220px), 1fr))', gap: '1rem' }}>
             <div className="form-group">
               <label className="form-label" htmlFor="docExp">Years of Practice</label>
               <input

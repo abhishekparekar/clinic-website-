@@ -505,11 +505,18 @@ img {
    Admin Tables & CRM Components
    ========================================================================== */
 
+.admin-main-content {
+  padding: clamp(0.875rem, 2.5vw, 2rem) clamp(0.75rem, 2vw, 1.5rem);
+  flex: 1;
+  min-width: 0;
+  width: 100%;
+}
+
 .table-responsive {
   width: 100%;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
-  border-radius: var(--radius-md);
+  border-radius: 4px;
   border: 1px solid var(--border-light);
   background: #FFFFFF;
 }
@@ -519,12 +526,12 @@ img {
   min-width: 600px;
   border-collapse: collapse;
   text-align: left;
-  font-size: 0.9rem;
+  font-size: 0.875rem;
 }
 
 .data-table th {
   background: #F8FAFC;
-  padding: 0.9rem 1.1rem;
+  padding: 0.85rem 1rem;
   font-weight: 600;
   color: var(--text-muted);
   border-bottom: 1px solid var(--border-light);
@@ -532,7 +539,7 @@ img {
 }
 
 .data-table td {
-  padding: 0.9rem 1.1rem;
+  padding: 0.85rem 1rem;
   border-bottom: 1px solid var(--border-light);
   color: var(--text-main);
   vertical-align: middle;
@@ -544,6 +551,81 @@ img {
 
 .data-table tr:hover td {
   background-color: #F8FAFC;
+}
+
+/* Admin Responsive Mobile Cards & Switcher */
+.admin-mobile-cards {
+  display: none;
+}
+
+.admin-desktop-table {
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .admin-mobile-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+  }
+  .admin-desktop-table {
+    display: none;
+  }
+}
+
+.admin-mobile-card {
+  background: #FFFFFF;
+  border: 1px solid var(--border-light);
+  border-radius: 4px;
+  padding: 1rem;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.admin-mobile-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.admin-mobile-card-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  font-size: 0.825rem;
+}
+
+.admin-mobile-card-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-top: 0.65rem;
+  border-top: 1px solid var(--border-light);
+  margin-top: 0.25rem;
+}
+
+/* Horizontal scroll bar for admin filter tabs */
+.admin-tabs-scroll {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 0.5rem;
+  scrollbar-width: thin;
+}
+
+.admin-tabs-scroll::-webkit-scrollbar {
+  height: 4px;
+}
+
+.admin-tabs-scroll::-webkit-scrollbar-thumb {
+  background: var(--border-medium);
+  border-radius: 4px;
 }
 
 /* ==========================================================================
@@ -559,13 +641,13 @@ img {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1rem;
+  padding: 0.75rem;
   animation: fadeIn 0.2s ease-out;
 }
 
 .modal-content {
   background: #FFFFFF;
-  border-radius: var(--radius-lg);
+  border-radius: 4px;
   max-width: 650px;
   width: 100%;
   max-height: 90vh;
@@ -580,17 +662,21 @@ img {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1.25rem 1.5rem;
+  padding: 1.1rem 1.25rem;
   border-bottom: 1px solid var(--border-light);
 }
 
 .modal-body {
-  padding: 1.5rem;
+  padding: 1.25rem;
 }
 
 @media (max-width: 640px) {
+  .modal-content {
+    max-height: 94vh;
+    border-radius: 4px;
+  }
   .modal-body {
-    padding: 1.1rem;
+    padding: 1rem;
   }
 }
 
@@ -599,7 +685,7 @@ img {
   align-items: center;
   justify-content: flex-end;
   gap: 0.75rem;
-  padding: 1.1rem 1.5rem;
+  padding: 1rem 1.25rem;
   border-top: 1px solid var(--border-light);
   background: #F8FAFC;
   flex-wrap: wrap;

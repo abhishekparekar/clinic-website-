@@ -137,21 +137,14 @@ export function AdminAppointments() {
       </div>
 
       {/* Status Filter Tabs */}
-      <div style={{
-        display: 'flex',
-        alignItems: 'center',
-        gap: '0.5rem',
-        overflowX: 'auto',
-        paddingBottom: '0.5rem',
-        marginBottom: '1.5rem'
-      }}>
+      <div className="admin-tabs-scroll" style={{ marginBottom: '1.25rem' }}>
         {statusTabs.map(tab => (
           <button
             key={tab.id}
             onClick={() => setStatusFilter(tab.id)}
             style={{
-              padding: '0.5rem 0.9rem',
-              borderRadius: '9999px',
+              padding: '0.45rem 0.8rem',
+              borderRadius: '4px',
               fontSize: '0.825rem',
               fontWeight: 600,
               cursor: 'pointer',
@@ -162,15 +155,16 @@ export function AdminAppointments() {
               borderColor: statusFilter === tab.id ? 'var(--primary)' : 'var(--border-light)',
               display: 'flex',
               alignItems: 'center',
-              gap: '0.4rem'
+              gap: '0.4rem',
+              transition: 'all 0.15s ease'
             }}
           >
             <span>{tab.label}</span>
             <span style={{
               background: statusFilter === tab.id ? 'rgba(255,255,255,0.25)' : '#F1F5F9',
-              padding: '0.1rem 0.45rem',
-              borderRadius: '9999px',
-              fontSize: '0.75rem'
+              padding: '0.1rem 0.4rem',
+              borderRadius: '4px',
+              fontSize: '0.725rem'
             }}>
               {tab.count}
             </span>
@@ -181,103 +175,183 @@ export function AdminAppointments() {
       {/* Search Input Bar */}
       <div style={{
         background: '#FFFFFF',
-        borderRadius: 'var(--radius-md)',
-        padding: '1rem',
+        borderRadius: '4px',
+        padding: '0.875rem 1rem',
         border: '1px solid var(--border-light)',
-        marginBottom: '1.5rem',
+        marginBottom: '1.25rem',
         display: 'flex',
         alignItems: 'center',
-        gap: '1rem'
+        justifyContent: 'space-between',
+        flexWrap: 'wrap',
+        gap: '0.75rem'
       }}>
-        <div style={{ position: 'relative', flex: 1 }}>
-          <Search size={18} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-subtle)' }} />
+        <div style={{ position: 'relative', flex: 1, minWidth: 'min(100%, 260px)' }}>
+          <Search size={16} style={{ position: 'absolute', left: '0.85rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-subtle)' }} />
           <input
             type="text"
-            placeholder="Search by patient name, phone number, email, or service..."
+            placeholder="Search by patient name, phone, email, or service..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="form-input"
-            style={{ paddingLeft: '2.75rem', width: '100%' }}
+            style={{ paddingLeft: '2.5rem', width: '100%', fontSize: '0.875rem' }}
           />
         </div>
 
-        <span style={{ fontSize: '0.85rem', color: 'var(--text-subtle)', whiteSpace: 'nowrap' }}>
-          Showing {filteredAppointments.length} of {appointments.length}
+        <span style={{ fontSize: '0.8rem', color: 'var(--text-subtle)', whiteSpace: 'nowrap' }}>
+          Showing <strong>{filteredAppointments.length}</strong> of {appointments.length}
         </span>
       </div>
 
-      {/* Main Table */}
-      <div className="table-responsive" style={{ boxShadow: 'var(--shadow-sm)' }}>
-        <table className="data-table">
-          <thead>
-            <tr>
-              <th>Reference</th>
-              <th>Patient</th>
-              <th>Phone</th>
-              <th>Requested Treatment</th>
-              <th>Preferred Slot</th>
-              <th>Status</th>
-              <th>Submitted</th>
-              <th style={{ textAlign: 'right' }}>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredAppointments.length === 0 ? (
+      {/* Desktop / Tablet Table View */}
+      <div className="admin-desktop-table">
+        <div className="table-responsive" style={{ boxShadow: 'var(--shadow-sm)' }}>
+          <table className="data-table">
+            <thead>
               <tr>
-                <td colSpan="8" style={{ textAlign: 'center', padding: '3.5rem 1rem', color: 'var(--text-muted)' }}>
-                  No appointment requests found matching current filters.
-                </td>
+                <th>Reference</th>
+                <th>Patient</th>
+                <th>Phone</th>
+                <th>Requested Treatment</th>
+                <th>Preferred Slot</th>
+                <th>Status</th>
+                <th>Submitted</th>
+                <th style={{ textAlign: 'right' }}>Actions</th>
               </tr>
-            ) : (
-              filteredAppointments.map(apt => (
-                <tr key={apt.id}>
-                  <td>
-                    <span style={{ fontFamily: 'monospace', fontSize: '0.8rem', color: 'var(--text-subtle)', fontWeight: 600 }}>
-                      #{apt.id}
-                    </span>
-                  </td>
-                  <td>
-                    <div style={{ fontWeight: 700, color: 'var(--text-main)' }}>{apt.patientName}</div>
-                    {apt.email && <div style={{ fontSize: '0.75rem', color: 'var(--text-subtle)' }}>{apt.email}</div>}
-                  </td>
-                  <td>
-                    <a href={`tel:${apt.phone}`} style={{ color: 'var(--primary)', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
-                      <Phone size={13} /> {apt.phone}
-                    </a>
-                  </td>
-                  <td style={{ maxWidth: '220px' }}>
-                    <div style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                      {apt.serviceNameSnapshot}
-                    </div>
-                  </td>
-                  <td>
-                    <div>{formatDate(apt.preferredDate)}</div>
-                    <div style={{ fontSize: '0.75rem', color: '#64748B' }}>{apt.preferredTime}</div>
-                  </td>
-                  <td>
-                    <span className={`badge badge-${apt.status}`}>
-                      {apt.status}
-                    </span>
-                  </td>
-                  <td style={{ fontSize: '0.8rem', color: '#64748B' }}>
-                    {formatDateTime(apt.createdAt)}
-                  </td>
-                  <td style={{ textAlign: 'right' }}>
-                    <button
-                      onClick={() => openDetailModal(apt)}
-                      className="btn btn-secondary btn-sm"
-                      style={{ padding: '0.4rem 0.75rem' }}
-                      title="View & Edit Status"
-                    >
-                      <Edit3 size={13} />
-                      <span>Review</span>
-                    </button>
+            </thead>
+            <tbody>
+              {filteredAppointments.length === 0 ? (
+                <tr>
+                  <td colSpan="8" style={{ textAlign: 'center', padding: '3.5rem 1rem', color: 'var(--text-muted)' }}>
+                    No appointment requests found matching current filters.
                   </td>
                 </tr>
-              ))
-            )}
-          </tbody>
-        </table>
+              ) : (
+                filteredAppointments.map(apt => (
+                  <tr key={apt.id}>
+                    <td>
+                      <span style={{ fontFamily: 'monospace', fontSize: '0.8rem', color: 'var(--text-subtle)', fontWeight: 600 }}>
+                        #{apt.id}
+                      </span>
+                    </td>
+                    <td>
+                      <div style={{ fontWeight: 700, color: 'var(--text-main)' }}>{apt.patientName}</div>
+                      {apt.email && <div style={{ fontSize: '0.75rem', color: 'var(--text-subtle)' }}>{apt.email}</div>}
+                    </td>
+                    <td>
+                      <a href={`tel:${apt.phone}`} style={{ color: 'var(--primary)', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
+                        <Phone size={13} /> {apt.phone}
+                      </a>
+                    </td>
+                    <td style={{ maxWidth: '220px' }}>
+                      <div style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                        {apt.serviceNameSnapshot}
+                      </div>
+                    </td>
+                    <td>
+                      <div>{formatDate(apt.preferredDate)}</div>
+                      <div style={{ fontSize: '0.75rem', color: '#64748B' }}>{apt.preferredTime}</div>
+                    </td>
+                    <td>
+                      <span className={`badge badge-${apt.status}`}>
+                        {apt.status}
+                      </span>
+                    </td>
+                    <td style={{ fontSize: '0.8rem', color: '#64748B' }}>
+                      {formatDateTime(apt.createdAt)}
+                    </td>
+                    <td style={{ textAlign: 'right' }}>
+                      <button
+                        onClick={() => openDetailModal(apt)}
+                        className="btn btn-secondary btn-sm"
+                        style={{ padding: '0.35rem 0.65rem', fontSize: '0.8rem' }}
+                        title="View & Edit Status"
+                      >
+                        <Edit3 size={13} />
+                        <span>Review</span>
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {/* Mobile Smartphone Card View (< 768px) */}
+      <div className="admin-mobile-cards">
+        {filteredAppointments.length === 0 ? (
+          <div style={{ textAlign: 'center', padding: '2.5rem 1rem', background: '#FFFFFF', borderRadius: '4px', border: '1px solid var(--border-light)', color: 'var(--text-muted)' }}>
+            No appointment requests found matching current filters.
+          </div>
+        ) : (
+          filteredAppointments.map(apt => (
+            <div key={apt.id} className="admin-mobile-card">
+              <div className="admin-mobile-card-header">
+                <div>
+                  <div style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--text-main)' }}>
+                    {apt.patientName}
+                  </div>
+                  <div style={{ fontSize: '0.75rem', color: 'var(--text-subtle)' }}>
+                    Ref #{apt.id} • {formatDateTime(apt.createdAt)}
+                  </div>
+                </div>
+                <span className={`badge badge-${apt.status}`}>
+                  {apt.status}
+                </span>
+              </div>
+
+              <div className="admin-mobile-card-row">
+                <span style={{ color: 'var(--text-muted)' }}>Treatment:</span>
+                <strong style={{ color: 'var(--text-main)', textAlign: 'right', maxWidth: '65%', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                  {apt.serviceNameSnapshot}
+                </strong>
+              </div>
+
+              <div className="admin-mobile-card-row">
+                <span style={{ color: 'var(--text-muted)' }}>Preferred:</span>
+                <span style={{ color: 'var(--text-main)' }}>{formatDate(apt.preferredDate)} ({apt.preferredTime})</span>
+              </div>
+
+              {apt.email && (
+                <div className="admin-mobile-card-row">
+                  <span style={{ color: 'var(--text-muted)' }}>Email:</span>
+                  <span style={{ color: 'var(--text-main)', fontSize: '0.775rem' }}>{apt.email}</span>
+                </div>
+              )}
+
+              {/* Quick Communication & Status Update Buttons */}
+              <div className="admin-mobile-card-actions">
+                <a 
+                  href={`tel:${apt.phone}`} 
+                  className="btn btn-secondary btn-sm"
+                  style={{ flex: 1, justifyContent: 'center', fontSize: '0.8rem', padding: '0.45rem' }}
+                >
+                  <Phone size={13} />
+                  <span>Call</span>
+                </a>
+                <a 
+                  href={`https://wa.me/${apt.phone?.replace(/[^0-9]/g, '')}?text=Hello%20${encodeURIComponent(apt.patientName)}%2C%20this%20is%20${encodeURIComponent(tenant?.name)}%20regarding%20your%20appointment%20request.`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-whatsapp btn-sm"
+                  style={{ flex: 1, justifyContent: 'center', fontSize: '0.8rem', padding: '0.45rem' }}
+                >
+                  <MessageSquare size={13} />
+                  <span>WhatsApp</span>
+                </a>
+                <button
+                  onClick={() => openDetailModal(apt)}
+                  className="btn btn-primary btn-sm"
+                  style={{ padding: '0.45rem 0.75rem', fontSize: '0.8rem' }}
+                >
+                  <Edit3 size={13} />
+                  <span>Review</span>
+                </button>
+              </div>
+            </div>
+          ))
+        )}
       </div>
 
       {/* Appointment Detail & Status Update Modal */}
@@ -301,18 +375,18 @@ export function AdminAppointments() {
         {selectedApt && (
           <div>
             {/* Patient Header Box */}
-            <div style={{ background: 'var(--bg-page)', padding: '1.25rem', borderRadius: '10px', marginBottom: '1.5rem', border: '1px solid var(--border-light)' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.75rem' }}>
+            <div style={{ background: 'var(--bg-page)', padding: '1rem', borderRadius: '4px', marginBottom: '1.25rem', border: '1px solid var(--border-light)' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '0.75rem', marginBottom: '0.75rem' }}>
                 <div>
-                  <h3 style={{ fontSize: '1.3rem', color: 'var(--text-main)', marginBottom: '0.2rem' }}>
+                  <h3 style={{ fontSize: '1.2rem', color: 'var(--text-main)', marginBottom: '0.2rem' }}>
                     {selectedApt.patientName}
                   </h3>
-                  <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>
-                    Consent Granted at: {formatDateTime(selectedApt.consentAt)}
+                  <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
+                    Consent Granted: {formatDateTime(selectedApt.consentAt)}
                   </div>
                 </div>
 
-                <div style={{ display: 'flex', gap: '0.5rem' }}>
+                <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
                   <a href={`tel:${selectedApt.phone}`} className="btn btn-secondary btn-sm">
                     <Phone size={13} /> Call
                   </a>
@@ -327,7 +401,7 @@ export function AdminAppointments() {
                 </div>
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '0.75rem', fontSize: '0.85rem' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 180px), 1fr))', gap: '0.5rem', fontSize: '0.825rem' }}>
                 <div>
                   <strong>Phone:</strong> {selectedApt.phone}
                 </div>
@@ -338,23 +412,23 @@ export function AdminAppointments() {
                   <strong>Service:</strong> {selectedApt.serviceNameSnapshot}
                 </div>
                 <div>
-                  <strong>Preferred Date:</strong> {formatDate(selectedApt.preferredDate)} ({selectedApt.preferredTime})
+                  <strong>Preferred:</strong> {formatDate(selectedApt.preferredDate)} ({selectedApt.preferredTime})
                 </div>
               </div>
             </div>
 
             {/* Patient Message / Note */}
-            <div style={{ marginBottom: '1.5rem' }}>
-              <div style={{ fontSize: '0.85rem', fontWeight: 700, color: '#64748B', textTransform: 'uppercase', marginBottom: '0.4rem' }}>
+            <div style={{ marginBottom: '1.25rem' }}>
+              <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#64748B', textTransform: 'uppercase', marginBottom: '0.35rem' }}>
                 Patient's Note / Visit Concern:
               </div>
-              <div style={{ padding: '0.85rem 1rem', background: '#F8FAFC', borderRadius: '8px', border: '1px solid var(--border-light)', fontSize: '0.9rem', color: 'var(--text-main)' }}>
+              <div style={{ padding: '0.75rem 0.9rem', background: '#F8FAFC', borderRadius: '4px', border: '1px solid var(--border-light)', fontSize: '0.875rem', color: 'var(--text-main)' }}>
                 {selectedApt.note ? selectedApt.note : <em style={{ color: '#94A3B8' }}>No note submitted.</em>}
               </div>
             </div>
 
             {/* Status Update Form Controls */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.25rem', marginBottom: '1.25rem' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 220px), 1fr))', gap: '1rem', marginBottom: '1.25rem' }}>
               <div className="form-group" style={{ marginBottom: 0 }}>
                 <label className="form-label" htmlFor="editStatus">
                   Update Enquiry Status (PRD Section 9)
@@ -374,10 +448,10 @@ export function AdminAppointments() {
                 </select>
               </div>
 
-              <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', background: '#F8FAFC', padding: '0.75rem', borderRadius: '4px', border: '1px solid var(--border-light)' }}>
                 <div style={{ fontSize: '0.75rem', color: '#64748B' }}>Audit Stamp:</div>
                 <div style={{ fontSize: '0.8rem', color: 'var(--text-main)' }}>
-                  Last updated by: <strong>{selectedApt.updatedBy || 'System'}</strong> on {formatDateTime(selectedApt.updatedAt)}
+                  Updated by: <strong>{selectedApt.updatedBy || 'System'}</strong> on {formatDateTime(selectedApt.updatedAt)}
                 </div>
               </div>
             </div>
@@ -394,6 +468,7 @@ export function AdminAppointments() {
                 value={editInternalNote}
                 onChange={(e) => setEditInternalNote(e.target.value)}
                 className="form-textarea"
+                style={{ borderRadius: '4px' }}
               />
               <span className="form-hint">
                 Note: Do not record complex medical diagnostic histories here (PRD Section 9).
