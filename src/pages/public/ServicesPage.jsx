@@ -93,7 +93,7 @@ export function ServicesPage() {
             </div>
 
             {/* Search Input */}
-            <div style={{ position: 'relative', minWidth: '280px' }}>
+            <div style={{ position: 'relative', minWidth: 'min(100%, 260px)', flex: '1 1 240px' }}>
               <Search size={18} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-subtle)' }} />
               <input 
                 type="text"
@@ -127,17 +127,17 @@ export function ServicesPage() {
           ) : (
             <div style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))',
-              gap: '2rem'
+              gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))',
+              gap: '1.5rem'
             }}>
               {filteredServices.map(service => (
                 <div 
-                  key={service.id}
+                  key={service.id} 
                   className="glass-card"
                   style={{
                     background: '#FFFFFF',
                     borderRadius: 'var(--radius-lg)',
-                    padding: '2.25rem',
+                    padding: 'clamp(1.25rem, 3.5vw, 2rem)',
                     display: 'flex',
                     flexDirection: 'column',
                     position: 'relative'

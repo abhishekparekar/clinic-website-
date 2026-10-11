@@ -42,8 +42,8 @@ export function DoctorsPage() {
         <div className="container">
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))',
-            gap: '2.5rem'
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))',
+            gap: 'clamp(1.5rem, 3.5vw, 2.5rem)'
           }}>
             {doctors.map(doc => (
               <div 
@@ -58,7 +58,7 @@ export function DoctorsPage() {
                 }}
               >
                 {/* Photo Header */}
-                <div style={{ height: '320px', position: 'relative', overflow: 'hidden' }}>
+                <div style={{ height: 'clamp(240px, 35vw, 320px)', position: 'relative', overflow: 'hidden' }}>
                   <img 
                     src={doc.photoUrl} 
                     alt={doc.name} 

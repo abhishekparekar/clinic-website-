@@ -62,7 +62,7 @@ export function AboutPage() {
                 Our clinicians hold postgraduate Master of Dental Surgery (MDS) degrees in prosthodontics, microscopic endodontics, and orthodontics, maintaining rigorous continuing medical education in digital dentistry.
               </p>
 
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.25rem' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 150px), 1fr))', gap: '1rem' }}>
                 <div style={{ padding: '1.25rem', borderRadius: '12px', background: 'var(--bg-page)', border: '1px solid var(--border-light)' }}>
                   <div style={{ fontWeight: 800, fontSize: '1.8rem', color: 'var(--primary)', marginBottom: '0.2rem' }}>
                     100%
@@ -84,11 +84,11 @@ export function AboutPage() {
             </div>
 
             <div style={{ position: 'relative' }}>
-              <div style={{ borderRadius: 'var(--radius-xl)', overflow: 'hidden', boxShadow: 'var(--shadow-xl)', border: '4px solid #FFFFFF' }}>
+              <div style={{ borderRadius: 'var(--radius-xl)', overflow: 'hidden', boxShadow: 'var(--shadow-xl)', border: '3px solid #FFFFFF' }}>
                 <img 
                   src="https://images.unsplash.com/photo-1629909615184-74f495363b67?auto=format&fit=crop&q=80&w=900" 
                   alt="Doctor performing consultation"
-                  style={{ width: '100%', height: '480px', objectFit: 'cover' }}
+                  style={{ width: '100%', height: 'clamp(260px, 40vw, 460px)', objectFit: 'cover' }}
                 />
               </div>
             </div>
@@ -114,8 +114,8 @@ export function AboutPage() {
 
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
-            gap: '1.5rem'
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 240px), 1fr))',
+            gap: '1.25rem'
           }}>
             {[
               {

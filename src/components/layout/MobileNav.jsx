@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { useTenant } from '../../features/tenant/TenantContext';
 import { Phone, MessageSquare, Calendar, MapPin } from 'lucide-react';
 
@@ -14,14 +14,18 @@ export function MobileNav() {
         bottom: 0,
         left: 0,
         right: 0,
-        background: 'rgba(255, 255, 255, 0.96)',
+        background: 'rgba(255, 255, 255, 0.98)',
         backdropFilter: 'blur(16px)',
-        borderTop: '1px solid rgba(226, 232, 240, 0.8)',
+        WebkitBackdropFilter: 'blur(16px)',
+        borderTop: '1px solid rgba(226, 232, 240, 0.9)',
         display: 'none',
         gridTemplateColumns: 'repeat(4, 1fr)',
-        padding: '0.45rem 0.5rem',
+        paddingTop: '0.45rem',
+        paddingBottom: 'calc(0.45rem + env(safe-area-inset-bottom, 0px))',
+        paddingLeft: '0.5rem',
+        paddingRight: '0.5rem',
         zIndex: 850,
-        boxShadow: '0 -4px 16px rgba(0, 0, 0, 0.08)'
+        boxShadow: '0 -4px 20px rgba(0, 0, 0, 0.08)'
       }}
       aria-label="Quick Mobile Actions"
     >
@@ -43,12 +47,12 @@ export function MobileNav() {
           fontSize: '0.7rem',
           fontWeight: 600,
           textDecoration: 'none',
-          padding: '0.3rem'
+          padding: '0.25rem 0'
         }}
       >
         <div style={{
-          width: '32px',
-          height: '32px',
+          width: '34px',
+          height: '34px',
           borderRadius: '50%',
           background: 'var(--primary-light)',
           color: 'var(--primary)',
@@ -75,12 +79,12 @@ export function MobileNav() {
           fontSize: '0.7rem',
           fontWeight: 600,
           textDecoration: 'none',
-          padding: '0.3rem'
+          padding: '0.25rem 0'
         }}
       >
         <div style={{
-          width: '32px',
-          height: '32px',
+          width: '34px',
+          height: '34px',
           borderRadius: '50%',
           background: '#DCFCE7',
           color: '#15803D',
@@ -107,12 +111,12 @@ export function MobileNav() {
           fontSize: '0.7rem',
           fontWeight: 600,
           textDecoration: 'none',
-          padding: '0.3rem'
+          padding: '0.25rem 0'
         }}
       >
         <div style={{
-          width: '32px',
-          height: '32px',
+          width: '34px',
+          height: '34px',
           borderRadius: '50%',
           background: 'var(--accent-light)',
           color: 'var(--accent)',
@@ -125,24 +129,24 @@ export function MobileNav() {
         <span>Map</span>
       </a>
 
-      {/* Book Appointment CTA */}
-      <Link 
+      {/* Book Appointment Slot */}
+      <NavLink 
         to="/appointment"
-        style={{
+        style={({ isActive }) => ({
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
           gap: '0.2rem',
-          color: 'var(--primary)',
+          color: isActive ? 'var(--primary)' : 'var(--text-main)',
           fontSize: '0.7rem',
           fontWeight: 700,
           textDecoration: 'none',
-          padding: '0.3rem'
-        }}
+          padding: '0.25rem 0'
+        })}
       >
         <div style={{
-          width: '32px',
-          height: '32px',
+          width: '34px',
+          height: '34px',
           borderRadius: '50%',
           background: 'var(--gradient-primary)',
           color: '#FFFFFF',
@@ -154,7 +158,7 @@ export function MobileNav() {
           <Calendar size={16} />
         </div>
         <span>Book Slot</span>
-      </Link>
+      </NavLink>
     </nav>
   );
 }

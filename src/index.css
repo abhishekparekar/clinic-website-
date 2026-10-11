@@ -1,6 +1,7 @@
 /* ==========================================================================
    Apex Dental Studio - Design System & Master Stylesheet
    Modern, Clean, Patient-Centric Healthcare Aesthetic with Linear Gradients
+   Fully Responsive for Mobile, Tablet, and Desktop Devices
    ========================================================================== */
 
 :root {
@@ -70,7 +71,8 @@
 
   /* Layout */
   --container-max: 1240px;
-  --header-height: 80px;
+  --header-height: 76px;
+  --mobile-bottom-bar-height: 64px;
 }
 
 /* Reset & Box Sizing */
@@ -84,6 +86,8 @@ html {
   scroll-behavior: smooth;
   font-size: 16px;
   -webkit-text-size-adjust: 100%;
+  overflow-x: hidden;
+  width: 100%;
 }
 
 body {
@@ -94,6 +98,8 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+  width: 100%;
+  position: relative;
 }
 
 /* Headings */
@@ -120,6 +126,7 @@ button {
   border: none;
   background: none;
   cursor: pointer;
+  touch-action: manipulation;
 }
 
 img {
@@ -141,6 +148,13 @@ img {
   padding-right: 1.5rem;
 }
 
+@media (max-width: 640px) {
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
 .section {
   padding-top: 5rem;
   padding-bottom: 5rem;
@@ -149,8 +163,8 @@ img {
 
 @media (max-width: 768px) {
   .section {
-    padding-top: 3.5rem;
-    padding-bottom: 3.5rem;
+    padding-top: 3.25rem;
+    padding-bottom: 3.25rem;
   }
 }
 
@@ -159,6 +173,12 @@ img {
   text-align: center;
   max-width: 680px;
   margin: 0 auto 3.5rem auto;
+}
+
+@media (max-width: 768px) {
+  .section-header {
+    margin-bottom: 2.25rem;
+  }
 }
 
 .section-tag {
@@ -178,19 +198,15 @@ img {
 }
 
 .section-title {
-  font-size: 2.5rem;
+  font-size: clamp(1.85rem, 5vw, 2.5rem);
   margin-bottom: 1rem;
-}
-
-@media (max-width: 768px) {
-  .section-title {
-    font-size: 2rem;
-  }
+  line-height: 1.2;
 }
 
 .section-subtitle {
-  font-size: 1.125rem;
+  font-size: clamp(0.975rem, 2.5vw, 1.125rem);
   color: var(--text-muted);
+  line-height: 1.65;
 }
 
 /* ==========================================================================
@@ -210,30 +226,32 @@ img {
 }
 
 .glass-panel {
-  background: rgba(255, 255, 255, 0.88);
+  background: rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(226, 232, 240, 0.8);
+  border: 1px solid rgba(226, 232, 240, 0.85);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-md);
 }
 
 .glass-card {
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(255, 255, 255, 0.96);
   backdrop-filter: blur(8px);
-  border: 1px solid rgba(226, 232, 240, 0.8);
+  border: 1px solid rgba(226, 232, 240, 0.85);
   border-radius: var(--radius-md);
   transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
 }
 
-.glass-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-xl);
-  border-color: rgba(13, 148, 136, 0.35);
+@media (hover: hover) {
+  .glass-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-xl);
+    border-color: rgba(13, 148, 136, 0.35);
+  }
 }
 
 /* ==========================================================================
-   Buttons
+   Buttons (Touch-Friendly Minimum 44px)
    ========================================================================== */
 
 .btn {
@@ -242,14 +260,16 @@ img {
   justify-content: center;
   gap: 0.5rem;
   padding: 0.85rem 1.75rem;
+  min-height: 44px;
   border-radius: var(--radius-full);
   font-family: var(--font-display);
   font-weight: 600;
   font-size: 0.975rem;
   line-height: 1;
-  transition: all 0.25s ease;
+  transition: all 0.2s ease;
   white-space: nowrap;
   user-select: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .btn-primary {
@@ -258,10 +278,16 @@ img {
   box-shadow: 0 4px 14px 0 rgba(15, 118, 110, 0.32);
 }
 
-.btn-primary:hover {
-  background: var(--gradient-primary-hover);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px 0 rgba(15, 118, 110, 0.42);
+.btn-primary:active {
+  transform: scale(0.98);
+}
+
+@media (hover: hover) {
+  .btn-primary:hover {
+    background: var(--gradient-primary-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px 0 rgba(15, 118, 110, 0.42);
+  }
 }
 
 .btn-secondary {
@@ -271,10 +297,16 @@ img {
   box-shadow: var(--shadow-sm);
 }
 
-.btn-secondary:hover {
-  border-color: var(--primary);
-  background: var(--primary-light);
-  transform: translateY(-2px);
+.btn-secondary:active {
+  transform: scale(0.98);
+}
+
+@media (hover: hover) {
+  .btn-secondary:hover {
+    border-color: var(--primary);
+    background: var(--primary-light);
+    transform: translateY(-2px);
+  }
 }
 
 .btn-outline-white {
@@ -283,9 +315,11 @@ img {
   border: 1.5px solid rgba(255, 255, 255, 0.7);
 }
 
-.btn-outline-white:hover {
-  background: rgba(255, 255, 255, 0.15);
-  border-color: #FFFFFF;
+@media (hover: hover) {
+  .btn-outline-white:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: #FFFFFF;
+  }
 }
 
 .btn-whatsapp {
@@ -294,33 +328,49 @@ img {
   box-shadow: 0 4px 14px 0 rgba(37, 211, 102, 0.35);
 }
 
-.btn-whatsapp:hover {
-  background: #20BD5A;
-  transform: translateY(-2px);
+.btn-whatsapp:active {
+  transform: scale(0.98);
+}
+
+@media (hover: hover) {
+  .btn-whatsapp:hover {
+    background: #20BD5A;
+    transform: translateY(-2px);
+  }
 }
 
 .btn-sm {
   padding: 0.5rem 1.1rem;
   font-size: 0.85rem;
+  min-height: 38px;
 }
 
 .btn-lg {
-  padding: 1.1rem 2.2rem;
+  padding: 1rem 2rem;
   font-size: 1.05rem;
+  min-height: 48px;
+}
+
+@media (max-width: 640px) {
+  .btn-lg {
+    padding: 0.85rem 1.5rem;
+    font-size: 0.975rem;
+  }
 }
 
 .btn-icon {
-  width: 42px;
-  height: 42px;
+  width: 44px;
+  height: 44px;
   padding: 0;
   border-radius: var(--radius-full);
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
 }
 
 /* ==========================================================================
-   Badges & Pills
+   Badges & Status Pills
    ========================================================================== */
 
 .badge {
@@ -332,6 +382,7 @@ img {
   font-size: 0.775rem;
   font-weight: 600;
   text-transform: capitalize;
+  white-space: nowrap;
 }
 
 .badge-new { background: var(--status-new-bg); color: var(--status-new); }
@@ -344,11 +395,11 @@ img {
 .badge-draft { background: #F1F5F9; color: #64748B; }
 
 /* ==========================================================================
-   Form Fields & Controls
+   Form Fields (iOS 16px Anti-Zoom Compliant)
    ========================================================================== */
 
 .form-group {
-  margin-bottom: 1.35rem;
+  margin-bottom: 1.25rem;
   display: flex;
   flex-direction: column;
 }
@@ -367,6 +418,7 @@ img {
   color: #DC2626;
 }
 
+/* 16px font size prevents Safari iOS auto-zoom on input tap */
 .form-input,
 .form-select,
 .form-textarea {
@@ -375,11 +427,12 @@ img {
   border: 1.5px solid var(--border-light);
   border-radius: var(--radius-md);
   font-family: inherit;
-  font-size: 0.95rem;
+  font-size: 16px;
   color: var(--text-main);
   background: #FFFFFF;
   transition: all 0.2s ease;
   outline: none;
+  min-height: 44px;
 }
 
 .form-input:focus,
@@ -406,6 +459,7 @@ img {
   font-size: 0.8rem;
   color: var(--text-subtle);
   margin-top: 0.35rem;
+  line-height: 1.4;
 }
 
 .form-checkbox-label {
@@ -416,12 +470,14 @@ img {
   color: var(--text-muted);
   cursor: pointer;
   user-select: none;
+  line-height: 1.5;
 }
 
 .form-checkbox-label input[type="checkbox"] {
   margin-top: 0.2rem;
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
   accent-color: var(--primary);
   cursor: pointer;
 }
@@ -433,6 +489,7 @@ img {
 .table-responsive {
   width: 100%;
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
   border-radius: var(--radius-md);
   border: 1px solid var(--border-light);
   background: #FFFFFF;
@@ -440,6 +497,7 @@ img {
 
 .data-table {
   width: 100%;
+  min-width: 600px;
   border-collapse: collapse;
   text-align: left;
   font-size: 0.9rem;
@@ -455,7 +513,7 @@ img {
 }
 
 .data-table td {
-  padding: 1rem 1.1rem;
+  padding: 0.9rem 1.1rem;
   border-bottom: 1px solid var(--border-light);
   color: var(--text-main);
   vertical-align: middle;
@@ -476,13 +534,13 @@ img {
 .modal-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(15, 23, 42, 0.6);
+  background: rgba(15, 23, 42, 0.65);
   backdrop-filter: blur(4px);
   z-index: 1000;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1.5rem;
+  padding: 1rem;
   animation: fadeIn 0.2s ease-out;
 }
 
@@ -493,6 +551,7 @@ img {
   width: 100%;
   max-height: 90vh;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   box-shadow: var(--shadow-xl);
   border: 1px solid var(--border-light);
   animation: slideUp 0.25s ease-out;
@@ -502,12 +561,18 @@ img {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1.5rem 1.75rem;
+  padding: 1.25rem 1.5rem;
   border-bottom: 1px solid var(--border-light);
 }
 
 .modal-body {
-  padding: 1.75rem;
+  padding: 1.5rem;
+}
+
+@media (max-width: 640px) {
+  .modal-body {
+    padding: 1.1rem;
+  }
 }
 
 .modal-footer {
@@ -515,13 +580,14 @@ img {
   align-items: center;
   justify-content: flex-end;
   gap: 0.75rem;
-  padding: 1.25rem 1.75rem;
+  padding: 1.1rem 1.5rem;
   border-top: 1px solid var(--border-light);
   background: #F8FAFC;
+  flex-wrap: wrap;
 }
 
 /* ==========================================================================
-   Toast Notifications
+   Toast Notifications (Mobile Safe Positioning)
    ========================================================================== */
 
 .toast-container {
@@ -535,11 +601,20 @@ img {
   max-width: 420px;
 }
 
+@media (max-width: 768px) {
+  .toast-container {
+    bottom: 5.5rem;
+    right: 1rem;
+    left: 1rem;
+    max-width: none;
+  }
+}
+
 .toast {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  padding: 1rem 1.25rem;
+  padding: 0.9rem 1.2rem;
   border-radius: var(--radius-md);
   background: #FFFFFF;
   box-shadow: var(--shadow-xl);

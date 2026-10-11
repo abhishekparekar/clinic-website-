@@ -197,7 +197,7 @@ export function AppointmentPage() {
                ========================================================================= */
             <div className="glass-panel" style={{ 
               background: '#FFFFFF', 
-              padding: '3.5rem 2.5rem', 
+              padding: 'clamp(1.75rem, 5vw, 3.5rem) clamp(1.2rem, 4vw, 2.5rem)', 
               textAlign: 'center', 
               borderRadius: 'var(--radius-xl)',
               boxShadow: 'var(--shadow-xl)',
@@ -311,7 +311,7 @@ export function AppointmentPage() {
                ========================================================================= */
             <div className="glass-panel" style={{ 
               background: '#FFFFFF', 
-              padding: '2.5rem', 
+              padding: 'clamp(1.25rem, 4vw, 2.5rem)', 
               borderRadius: 'var(--radius-xl)',
               boxShadow: 'var(--shadow-lg)'
             }}>
@@ -332,7 +332,7 @@ export function AppointmentPage() {
                   />
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 260px), 1fr))', gap: '1.25rem' }}>
                   
                   {/* Patient Name */}
                   <div className="form-group">
@@ -377,7 +377,7 @@ export function AppointmentPage() {
 
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 260px), 1fr))', gap: '1.25rem' }}>
                   
                   {/* Email */}
                   <div className="form-group">
@@ -422,7 +422,7 @@ export function AppointmentPage() {
 
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 260px), 1fr))', gap: '1.25rem' }}>
                   
                   {/* Preferred Date */}
                   <div className="form-group">

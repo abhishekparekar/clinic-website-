@@ -43,9 +43,9 @@ export function ContactPage() {
         <div className="container">
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-            gap: '3.5rem',
-            marginBottom: '4rem'
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))',
+            gap: 'clamp(2rem, 4vw, 3.5rem)',
+            marginBottom: '3.5rem'
           }}>
             
             {/* Column 1: Direct Contact Channels */}
@@ -221,7 +221,7 @@ export function ContactPage() {
             </div>
 
             <div style={{ 
-              height: '380px', 
+              height: 'clamp(260px, 42vw, 380px)', 
               borderRadius: 'var(--radius-lg)', 
               overflow: 'hidden', 
               boxShadow: 'var(--shadow-md)', 
