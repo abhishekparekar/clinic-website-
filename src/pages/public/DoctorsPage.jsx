@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useTenant } from '../../features/tenant/TenantContext';
+import { useAppointmentModal } from '../../features/appointment/AppointmentModalContext';
 import { dentalStore } from '../../lib/store';
 import { 
   Award, 
@@ -13,19 +14,20 @@ import {
 
 export function DoctorsPage() {
   const { tenant } = useTenant();
+  const { openAppointmentModal } = useAppointmentModal();
   const doctors = dentalStore.getDoctors(tenant.id, true);
 
   return (
     <div>
       {/* Page Header */}
-      <section style={{ 
+      <section className="section-animate" style={{ 
         background: 'var(--gradient-hero)', 
         padding: '4.5rem 0', 
         borderBottom: '1px solid var(--border-light)',
         textAlign: 'center'
       }}>
         <div className="container" style={{ maxWidth: '800px' }}>
-          <span className="section-tag">
+          <span className="section-tag" style={{ borderRadius: '4px' }}>
             <Award size={14} /> Specialist Clinicians & Dentists
           </span>
           <h1 style={{ fontSize: 'clamp(2.2rem, 4vw, 3.2rem)', marginBottom: '1.25rem' }}>
@@ -38,7 +40,7 @@ export function DoctorsPage() {
       </section>
 
       {/* Doctors Grid */}
-      <section className="section" style={{ background: 'var(--bg-page)' }}>
+      <section className="section section-animate" style={{ background: 'var(--bg-page)' }}>
         <div className="container">
           <div style={{
             display: 'grid',
@@ -51,7 +53,7 @@ export function DoctorsPage() {
                 className="glass-card"
                 style={{
                   background: '#FFFFFF',
-                  borderRadius: 'var(--radius-lg)',
+                  borderRadius: '4px',
                   overflow: 'hidden',
                   display: 'flex',
                   flexDirection: 'column'
@@ -72,7 +74,7 @@ export function DoctorsPage() {
                     backdropFilter: 'blur(4px)',
                     color: '#FFFFFF',
                     padding: '0.35rem 0.85rem',
-                    borderRadius: '9999px',
+                    borderRadius: '4px',
                     fontSize: '0.8rem',
                     fontWeight: 700
                   }}>
@@ -111,7 +113,7 @@ export function DoctorsPage() {
                   {/* Languages & Schedule */}
                   <div style={{
                     background: 'var(--bg-page)',
-                    borderRadius: '10px',
+                    borderRadius: '4px',
                     padding: '1rem',
                     marginBottom: '1.75rem',
                     display: 'flex',
@@ -131,14 +133,14 @@ export function DoctorsPage() {
                   </div>
 
                   {/* Booking CTA */}
-                  <Link 
-                    to={`/appointment?doctor=${doc.id}`}
+                  <button 
+                    onClick={() => openAppointmentModal()}
                     className="btn btn-primary"
                     style={{ width: '100%' }}
                   >
                     <Calendar size={16} />
                     <span>Book Consultation with {doc.name.split(' ')[1]}</span>
-                  </Link>
+                  </button>
 
                 </div>
               </div>

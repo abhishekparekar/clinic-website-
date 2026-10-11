@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { useTenant } from '../../features/tenant/TenantContext';
+import { useAppointmentModal } from '../../features/appointment/AppointmentModalContext';
 import { dentalStore } from '../../lib/store';
 import { 
   HelpCircle, 
@@ -13,6 +14,7 @@ import {
 
 export function FaqPage() {
   const { tenant } = useTenant();
+  const { openAppointmentModal } = useAppointmentModal();
   const faqs = dentalStore.getFaqs(tenant.id, true);
 
   const [searchQuery, setSearchQuery] = useState('');
@@ -47,14 +49,14 @@ export function FaqPage() {
   return (
     <div>
       {/* Page Header */}
-      <section style={{ 
+      <section className="section-animate" style={{ 
         background: 'var(--gradient-hero)', 
         padding: '4.5rem 0', 
         borderBottom: '1px solid var(--border-light)',
         textAlign: 'center'
       }}>
         <div className="container" style={{ maxWidth: '800px' }}>
-          <span className="section-tag">
+          <span className="section-tag" style={{ borderRadius: '4px' }}>
             <HelpCircle size={14} /> Clear Answers & Transparency
           </span>
           <h1 style={{ fontSize: 'clamp(2.2rem, 4vw, 3.2rem)', marginBottom: '1.25rem' }}>
@@ -79,7 +81,7 @@ export function FaqPage() {
                   onClick={() => setSelectedCategory(cat)}
                   style={{
                     padding: '0.45rem 1rem',
-                    borderRadius: '9999px',
+                    borderRadius: '4px',
                     fontSize: '0.85rem',
                     fontWeight: 600,
                     cursor: 'pointer',
@@ -103,7 +105,7 @@ export function FaqPage() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="form-input"
-                style={{ paddingLeft: '2.75rem' }}
+                style={{ paddingLeft: '2.75rem', borderRadius: '4px' }}
               />
             </div>
 
@@ -186,7 +188,7 @@ export function FaqPage() {
           <div style={{ 
             marginTop: '4rem', 
             background: 'var(--gradient-card)', 
-            borderRadius: 'var(--radius-lg)', 
+            borderRadius: '4px', 
             padding: '2.5rem', 
             textAlign: 'center',
             border: '1px solid var(--border-light)'
@@ -209,10 +211,13 @@ export function FaqPage() {
                 <span>Ask on WhatsApp</span>
               </a>
 
-              <Link to="/appointment" className="btn btn-primary">
+              <button 
+                onClick={() => openAppointmentModal()}
+                className="btn btn-primary"
+              >
                 <Calendar size={16} />
                 <span>Request Appointment Slot</span>
-              </Link>
+              </button>
             </div>
           </div>
 

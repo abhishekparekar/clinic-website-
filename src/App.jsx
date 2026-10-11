@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { TenantProvider } from './features/tenant/TenantContext';
 import { AuthProvider } from './features/auth/AuthContext';
+import { AppointmentModalProvider } from './features/appointment/AppointmentModalContext';
 
 // Layouts
 import { PublicLayout } from './components/layout/PublicLayout';
@@ -36,35 +37,37 @@ export function App() {
     <BrowserRouter>
       <TenantProvider>
         <AuthProvider>
-          <Routes>
-            {/* Public Routes with Shared PublicLayout */}
-            <Route path="/" element={<PublicLayout />}>
-              <Route index element={<HomePage />} />
-              <Route path="about" element={<AboutPage />} />
-              <Route path="services" element={<ServicesPage />} />
-              <Route path="services/:slug" element={<ServiceDetailPage />} />
-              <Route path="doctors" element={<DoctorsPage />} />
-              <Route path="faq" element={<FaqPage />} />
-              <Route path="contact" element={<ContactPage />} />
-              <Route path="appointment" element={<AppointmentPage />} />
-              <Route path="privacy-policy" element={<PrivacyPolicyPage />} />
-              <Route path="*" element={<NotFoundPage />} />
-            </Route>
+          <AppointmentModalProvider>
+            <Routes>
+              {/* Public Routes with Shared PublicLayout */}
+              <Route path="/" element={<PublicLayout />}>
+                <Route index element={<HomePage />} />
+                <Route path="about" element={<AboutPage />} />
+                <Route path="services" element={<ServicesPage />} />
+                <Route path="services/:slug" element={<ServiceDetailPage />} />
+                <Route path="doctors" element={<DoctorsPage />} />
+                <Route path="faq" element={<FaqPage />} />
+                <Route path="contact" element={<ContactPage />} />
+                <Route path="appointment" element={<AppointmentPage />} />
+                <Route path="privacy-policy" element={<PrivacyPolicyPage />} />
+                <Route path="*" element={<NotFoundPage />} />
+              </Route>
 
-            {/* Admin Authentication (Standalone) */}
-            <Route path="/admin/login" element={<AdminLoginPage />} />
+              {/* Admin Authentication (Standalone) */}
+              <Route path="/admin/login" element={<AdminLoginPage />} />
 
-            {/* Protected Admin Routes with AdminLayout */}
-            <Route path="/admin" element={<AdminLayout />}>
-              <Route index element={<AdminOverview />} />
-              <Route path="appointments" element={<AdminAppointments />} />
-              <Route path="services" element={<AdminServices />} />
-              <Route path="doctors" element={<AdminDoctors />} />
-              <Route path="faqs" element={<AdminFaqs />} />
-              <Route path="clinic-settings" element={<AdminSettings />} />
-              <Route path="team" element={<AdminTeam />} />
-            </Route>
-          </Routes>
+              {/* Protected Admin Routes with AdminLayout */}
+              <Route path="/admin" element={<AdminLayout />}>
+                <Route index element={<AdminOverview />} />
+                <Route path="appointments" element={<AdminAppointments />} />
+                <Route path="services" element={<AdminServices />} />
+                <Route path="doctors" element={<AdminDoctors />} />
+                <Route path="faqs" element={<AdminFaqs />} />
+                <Route path="clinic-settings" element={<AdminSettings />} />
+                <Route path="team" element={<AdminTeam />} />
+              </Route>
+            </Routes>
+          </AppointmentModalProvider>
         </AuthProvider>
       </TenantProvider>
     </BrowserRouter>

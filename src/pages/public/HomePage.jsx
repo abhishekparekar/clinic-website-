@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useTenant } from '../../features/tenant/TenantContext';
+import { useAppointmentModal } from '../../features/appointment/AppointmentModalContext';
 import { dentalStore } from '../../lib/store';
 import { 
   Calendar, 
@@ -23,6 +24,7 @@ import {
 
 export function HomePage() {
   const { tenant } = useTenant();
+  const { openAppointmentModal } = useAppointmentModal();
   const services = dentalStore.getServices(tenant.id, true);
   const doctors = dentalStore.getDoctors(tenant.id, true);
   const faqs = dentalStore.getFaqs(tenant.id, true).slice(0, 4);
@@ -38,7 +40,7 @@ export function HomePage() {
       {/* =========================================================================
           HERO SECTION with Linear Gradients & Responsive Polish
           ========================================================================= */}
-      <section style={{ 
+      <section className="section-animate" style={{ 
         background: 'var(--gradient-hero)', 
         paddingTop: 'clamp(3rem, 6vw, 4.5rem)', 
         paddingBottom: 'clamp(3.5rem, 6vw, 5rem)',
@@ -73,7 +75,7 @@ export function HomePage() {
                 alignItems: 'center', 
                 gap: '0.5rem', 
                 padding: '0.35rem 0.85rem', 
-                borderRadius: '9999px', 
+                borderRadius: '4px', 
                 background: 'rgba(255, 255, 255, 0.92)', 
                 border: '1px solid rgba(13, 148, 136, 0.3)',
                 boxShadow: 'var(--shadow-sm)',
@@ -110,10 +112,14 @@ export function HomePage() {
 
               {/* Action Buttons */}
               <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '0.85rem', marginBottom: '2rem' }}>
-                <Link to="/appointment" className="btn btn-primary btn-lg" style={{ flexGrow: 1, maxWidth: '280px' }}>
+                <button 
+                  onClick={() => openAppointmentModal()}
+                  className="btn btn-primary btn-lg" 
+                  style={{ flexGrow: 1, maxWidth: '280px' }}
+                >
                   <Calendar size={18} />
                   <span>Book Appointment</span>
-                </Link>
+                </button>
 
                 <a 
                   href={`https://wa.me/${tenant?.contact?.whatsapp?.replace(/[^0-9]/g, '')}?text=Hello%20${encodeURIComponent(tenant?.name)}%2C%20I%20have%20an%20enquiry%20regarding%20dental%20treatment.`}
@@ -155,7 +161,7 @@ export function HomePage() {
             <div style={{ position: 'relative', width: '100%', maxWidth: '520px', margin: '0 auto' }}>
               <div style={{
                 position: 'relative',
-                borderRadius: 'var(--radius-xl)',
+                borderRadius: '4px',
                 overflow: 'hidden',
                 boxShadow: 'var(--shadow-xl)',
                 border: '3px solid #FFFFFF'
@@ -192,12 +198,13 @@ export function HomePage() {
                   padding: '0.75rem 1rem',
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '0.65rem'
+                  gap: '0.65rem',
+                  borderRadius: '4px'
                 }}>
                   <div style={{
                     width: '36px',
                     height: '36px',
-                    borderRadius: '8px',
+                    borderRadius: '4px',
                     background: 'var(--primary-light)',
                     color: 'var(--primary)',
                     display: 'flex',
@@ -221,12 +228,13 @@ export function HomePage() {
                   padding: '0.75rem 1rem',
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '0.65rem'
+                  gap: '0.65rem',
+                  borderRadius: '4px'
                 }}>
                   <div style={{
                     width: '36px',
                     height: '36px',
-                    borderRadius: '8px',
+                    borderRadius: '4px',
                     background: '#FEF3C7',
                     color: '#D97706',
                     display: 'flex',
@@ -288,10 +296,10 @@ export function HomePage() {
       {/* =========================================================================
           FEATURED TREATMENTS & SERVICES
           ========================================================================= */}
-      <section className="section" style={{ background: 'var(--bg-page)' }}>
+      <section className="section section-animate" style={{ background: 'var(--bg-page)' }}>
         <div className="container">
           <div className="section-header">
-            <span className="section-tag">
+            <span className="section-tag" style={{ borderRadius: '4px' }}>
               <Stethoscope size={14} /> Comprehensive Dental Specialties
             </span>
             <h2 className="section-title">
@@ -316,7 +324,7 @@ export function HomePage() {
                   padding: 'clamp(1.25rem, 3vw, 1.85rem)',
                   display: 'flex',
                   flexDirection: 'column',
-                  borderRadius: 'var(--radius-lg)',
+                  borderRadius: '4px',
                   background: '#FFFFFF'
                 }}
               >
@@ -329,7 +337,7 @@ export function HomePage() {
                     color: 'var(--primary)',
                     background: 'var(--primary-light)',
                     padding: '0.25rem 0.65rem',
-                    borderRadius: '9999px'
+                    borderRadius: '4px'
                   }}>
                     {service.category}
                   </span>
@@ -373,12 +381,12 @@ export function HomePage() {
                     <ArrowRight size={14} />
                   </Link>
 
-                  <Link 
-                    to={`/appointment?service=${service.slug}`}
+                  <button 
+                    onClick={() => openAppointmentModal(service.slug)}
                     className="btn btn-secondary btn-sm"
                   >
                     <span>Book Slot</span>
-                  </Link>
+                  </button>
                 </div>
               </div>
             ))}
@@ -396,7 +404,7 @@ export function HomePage() {
       {/* =========================================================================
           THE CLINICAL EXPERIENCE & TECHNOLOGY
           ========================================================================= */}
-      <section className="section" style={{ background: '#FFFFFF' }}>
+      <section className="section section-animate" style={{ background: '#FFFFFF' }}>
         <div className="container">
           <div style={{
             display: 'grid',
@@ -405,7 +413,7 @@ export function HomePage() {
             alignItems: 'center'
           }}>
             <div>
-              <span className="section-tag">
+              <span className="section-tag" style={{ borderRadius: '4px' }}>
                 <ShieldCheck size={14} /> Hospital-Grade Patient Safety
               </span>
               <h2 style={{ fontSize: 'clamp(1.8rem, 4vw, 2.4rem)', marginBottom: '1.1rem', lineHeight: 1.25 }}>
@@ -418,7 +426,7 @@ export function HomePage() {
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', marginBottom: '2rem' }}>
                 <div style={{ display: 'flex', gap: '0.85rem', alignItems: 'flex-start' }}>
-                  <div style={{ width: '36px', height: '36px', borderRadius: '10px', background: 'var(--primary-light)', color: 'var(--primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                  <div style={{ width: '36px', height: '36px', borderRadius: '4px', background: 'var(--primary-light)', color: 'var(--primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                     <ShieldCheck size={18} />
                   </div>
                   <div>
@@ -430,7 +438,7 @@ export function HomePage() {
                 </div>
 
                 <div style={{ display: 'flex', gap: '0.85rem', alignItems: 'flex-start' }}>
-                  <div style={{ width: '36px', height: '36px', borderRadius: '10px', background: 'var(--accent-light)', color: 'var(--accent)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                  <div style={{ width: '36px', height: '36px', borderRadius: '4px', background: 'var(--accent-light)', color: 'var(--accent)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                     <Microscope size={18} />
                   </div>
                   <div>
@@ -442,7 +450,7 @@ export function HomePage() {
                 </div>
 
                 <div style={{ display: 'flex', gap: '0.85rem', alignItems: 'flex-start' }}>
-                  <div style={{ width: '36px', height: '36px', borderRadius: '10px', background: '#DCFCE7', color: '#15803D', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                  <div style={{ width: '36px', height: '36px', borderRadius: '4px', background: '#DCFCE7', color: '#15803D', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                     <Heart size={18} />
                   </div>
                   <div>
@@ -466,28 +474,28 @@ export function HomePage() {
               gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 140px), 1fr))',
               gap: '0.85rem'
             }}>
-              <div style={{ borderRadius: 'var(--radius-lg)', overflow: 'hidden', boxShadow: 'var(--shadow-md)', height: 'clamp(160px, 22vw, 220px)' }}>
+              <div style={{ borderRadius: '4px', overflow: 'hidden', boxShadow: 'var(--shadow-md)', height: 'clamp(160px, 22vw, 220px)' }}>
                 <img 
                   src="https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?auto=format&fit=crop&q=80&w=600" 
                   alt="Modern Dental Consultation Suite" 
                   style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
                 />
               </div>
-              <div style={{ borderRadius: 'var(--radius-lg)', overflow: 'hidden', boxShadow: 'var(--shadow-md)', height: 'clamp(160px, 22vw, 220px)' }}>
+              <div style={{ borderRadius: '4px', overflow: 'hidden', boxShadow: 'var(--shadow-md)', height: 'clamp(160px, 22vw, 220px)' }}>
                 <img 
                   src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&q=80&w=600" 
                   alt="Class-B Sterilization Lab" 
                   style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
                 />
               </div>
-              <div style={{ borderRadius: 'var(--radius-lg)', overflow: 'hidden', boxShadow: 'var(--shadow-md)', height: 'clamp(160px, 22vw, 220px)' }}>
+              <div style={{ borderRadius: '4px', overflow: 'hidden', boxShadow: 'var(--shadow-md)', height: 'clamp(160px, 22vw, 220px)' }}>
                 <img 
                   src="https://images.unsplash.com/photo-1606811841689-23dfddce3e95?auto=format&fit=crop&q=80&w=600" 
                   alt="Gentle Dental Cleaning" 
                   style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
                 />
               </div>
-              <div style={{ borderRadius: 'var(--radius-lg)', overflow: 'hidden', boxShadow: 'var(--shadow-md)', height: 'clamp(160px, 22vw, 220px)' }}>
+              <div style={{ borderRadius: '4px', overflow: 'hidden', boxShadow: 'var(--shadow-md)', height: 'clamp(160px, 22vw, 220px)' }}>
                 <img 
                   src="https://images.unsplash.com/photo-1609840114035-3c981b782dfe?auto=format&fit=crop&q=80&w=600" 
                   alt="Intraoral Digital Scanner" 
@@ -503,10 +511,13 @@ export function HomePage() {
       {/* =========================================================================
           MEET OUR SPECIALISTS
           ========================================================================= */}
-      <section className="section" style={{ background: 'var(--bg-page)' }}>
+      {/* =========================================================================
+          MEET OUR SPECIALISTS
+          ========================================================================= */}
+      <section className="section section-animate" style={{ background: 'var(--bg-page)' }}>
         <div className="container">
           <div className="section-header">
-            <span className="section-tag">
+            <span className="section-tag" style={{ borderRadius: '4px' }}>
               <Award size={14} /> Verified Clinical Qualifications
             </span>
             <h2 className="section-title">
@@ -528,7 +539,7 @@ export function HomePage() {
                 key={doc.id}
                 className="glass-card"
                 style={{
-                  borderRadius: 'var(--radius-lg)',
+                  borderRadius: '4px',
                   background: '#FFFFFF',
                   overflow: 'hidden',
                   display: 'flex',
@@ -549,7 +560,7 @@ export function HomePage() {
                     backdropFilter: 'blur(4px)',
                     color: '#FFFFFF',
                     padding: '0.25rem 0.65rem',
-                    borderRadius: '6px',
+                    borderRadius: '4px',
                     fontSize: '0.75rem',
                     fontWeight: 600
                   }}>
@@ -573,9 +584,12 @@ export function HomePage() {
                     <span style={{ fontSize: '0.75rem', color: 'var(--text-subtle)' }}>
                       {doc.languages?.slice(0, 2).join(', ')}
                     </span>
-                    <Link to="/appointment" className="btn btn-secondary btn-sm">
+                    <button 
+                      onClick={() => openAppointmentModal()}
+                      className="btn btn-secondary btn-sm"
+                    >
                       Book Visit
-                    </Link>
+                    </button>
                   </div>
                 </div>
               </div>
@@ -594,10 +608,10 @@ export function HomePage() {
       {/* =========================================================================
           FAQ PREVIEW SECTION
           ========================================================================= */}
-      <section className="section" style={{ background: '#FFFFFF' }}>
+      <section className="section section-animate" style={{ background: '#FFFFFF' }}>
         <div className="container" style={{ maxWidth: '800px' }}>
           <div className="section-header">
-            <span className="section-tag">
+            <span className="section-tag" style={{ borderRadius: '4px' }}>
               <Smile size={14} /> Clear Answers For Patients
             </span>
             <h2 className="section-title">
@@ -616,7 +630,7 @@ export function HomePage() {
                   key={faq.id} 
                   style={{
                     border: '1.5px solid var(--border-light)',
-                    borderRadius: 'var(--radius-md)',
+                    borderRadius: '4px',
                     overflow: 'hidden',
                     background: isOpen ? 'var(--bg-page)' : '#FFFFFF',
                     transition: 'border-color 0.2s ease'
@@ -672,7 +686,7 @@ export function HomePage() {
       {/* =========================================================================
           HIGH-CONVERSION APPOINTMENT CTA BANNER
           ========================================================================= */}
-      <section style={{ 
+      <section className="section-animate" style={{ 
         background: 'var(--gradient-primary)', 
         color: '#FFFFFF', 
         padding: 'clamp(3rem, 6vw, 4.5rem) 0',
@@ -688,10 +702,14 @@ export function HomePage() {
           </p>
 
           <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap', gap: '0.85rem' }}>
-            <Link to="/appointment" className="btn btn-secondary btn-lg" style={{ background: '#FFFFFF', color: 'var(--primary)', fontWeight: 700 }}>
+            <button 
+              onClick={() => openAppointmentModal()}
+              className="btn btn-secondary btn-lg" 
+              style={{ background: '#FFFFFF', color: 'var(--primary)', fontWeight: 700 }}
+            >
               <Calendar size={18} />
               <span>Request Appointment Slot</span>
-            </Link>
+            </button>
 
             <a 
               href={`tel:${tenant?.contact?.phoneRaw}`}

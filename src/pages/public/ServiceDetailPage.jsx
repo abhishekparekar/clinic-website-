@@ -1,6 +1,7 @@
 import React from 'react';
 import { useParams, Link, Navigate } from 'react-router-dom';
 import { useTenant } from '../../features/tenant/TenantContext';
+import { useAppointmentModal } from '../../features/appointment/AppointmentModalContext';
 import { dentalStore } from '../../lib/store';
 import { 
   Clock, 
@@ -16,6 +17,7 @@ import {
 export function ServiceDetailPage() {
   const { slug } = useParams();
   const { tenant } = useTenant();
+  const { openAppointmentModal } = useAppointmentModal();
   const service = dentalStore.getServiceBySlug(tenant.id, slug);
 
   if (!service) {
@@ -25,7 +27,7 @@ export function ServiceDetailPage() {
   return (
     <div>
       {/* Breadcrumb Header */}
-      <section style={{ 
+      <section className="section-animate" style={{ 
         background: 'var(--gradient-hero)', 
         padding: '3.5rem 0', 
         borderBottom: '1px solid var(--border-light)' 
@@ -48,7 +50,7 @@ export function ServiceDetailPage() {
           </Link>
 
           <div style={{ maxWidth: '820px' }}>
-            <span className="section-tag" style={{ marginBottom: '0.75rem' }}>
+            <span className="section-tag" style={{ marginBottom: '0.75rem', borderRadius: '4px' }}>
               {service.category}
             </span>
             <h1 style={{ fontSize: 'clamp(2.2rem, 4vw, 3.2rem)', marginBottom: '1rem', lineHeight: 1.2 }}>
@@ -73,7 +75,7 @@ export function ServiceDetailPage() {
       </section>
 
       {/* Main Content Layout */}
-      <section className="section" style={{ background: '#FFFFFF' }}>
+      <section className="section section-animate" style={{ background: '#FFFFFF' }}>
         <div className="container">
           <div style={{ 
             display: 'grid', 
@@ -104,7 +106,7 @@ export function ServiceDetailPage() {
                           alignItems: 'flex-start',
                           gap: '1.25rem',
                           padding: '1.25rem',
-                          borderRadius: 'var(--radius-md)',
+                          borderRadius: '4px',
                           background: 'var(--bg-page)',
                           border: '1px solid var(--border-light)'
                         }}
@@ -112,7 +114,7 @@ export function ServiceDetailPage() {
                         <div style={{
                           width: '36px',
                           height: '36px',
-                          borderRadius: '50%',
+                          borderRadius: '4px',
                           background: 'var(--gradient-primary)',
                           color: '#FFFFFF',
                           fontWeight: 700,
@@ -140,7 +142,7 @@ export function ServiceDetailPage() {
                   <h3 style={{ fontSize: '1.5rem', marginBottom: '1.25rem' }}>Treatment Advantages & Care Standards</h3>
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '0.75rem' }}>
                     {service.benefits.map((benefit, bIdx) => (
-                      <div key={bIdx} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.75rem', padding: '0.85rem 1rem', background: '#F0FDFA', borderRadius: '8px' }}>
+                      <div key={bIdx} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.75rem', padding: '0.85rem 1rem', background: '#F0FDFA', borderRadius: '4px' }}>
                         <CheckCircle2 size={18} color="var(--primary)" style={{ flexShrink: 0, marginTop: '2px' }} />
                         <span style={{ fontSize: '0.95rem', fontWeight: 500, color: '#134E4A' }}>{benefit}</span>
                       </div>
@@ -153,8 +155,8 @@ export function ServiceDetailPage() {
 
             {/* Right Column: Sticky Booking Card & Coordinator Hotline */}
             <div style={{ position: 'sticky', top: '100px' }}>
-              <div className="glass-panel" style={{ padding: '2rem', background: '#FFFFFF', boxShadow: 'var(--shadow-xl)' }}>
-                <span className="badge badge-active" style={{ marginBottom: '1rem' }}>
+              <div className="glass-panel" style={{ padding: '2rem', background: '#FFFFFF', boxShadow: 'var(--shadow-xl)', borderRadius: '4px' }}>
+                <span className="badge badge-active" style={{ marginBottom: '1rem', borderRadius: '4px' }}>
                   Accepting New Consultations
                 </span>
 
@@ -167,7 +169,7 @@ export function ServiceDetailPage() {
 
                 <div style={{ 
                   background: 'var(--bg-page)', 
-                  borderRadius: '10px', 
+                  borderRadius: '4px', 
                   padding: '1.25rem', 
                   marginBottom: '1.75rem',
                   border: '1px solid var(--border-light)'
@@ -181,14 +183,14 @@ export function ServiceDetailPage() {
                   </div>
                 </div>
 
-                <Link 
-                  to={`/appointment?service=${service.slug}`} 
+                <button 
+                  onClick={() => openAppointmentModal(service.slug)} 
                   className="btn btn-primary btn-lg"
                   style={{ width: '100%', marginBottom: '1rem' }}
                 >
                   <Calendar size={18} />
                   <span>Book This Treatment</span>
-                </Link>
+                </button>
 
                 <a 
                   href={`tel:${tenant?.contact?.phoneRaw}`}

@@ -167,14 +167,14 @@ export function AppointmentPage() {
   return (
     <div>
       {/* Header */}
-      <section style={{ 
+      <section className="section-animate" style={{ 
         background: 'var(--gradient-hero)', 
         padding: '3.5rem 0', 
         borderBottom: '1px solid var(--border-light)',
         textAlign: 'center'
       }}>
         <div className="container" style={{ maxWidth: '750px' }}>
-          <span className="section-tag">
+          <span className="section-tag" style={{ borderRadius: '4px' }}>
             <Calendar size={14} /> Hassle-Free Appointment Request
           </span>
           <h1 style={{ fontSize: 'clamp(2.2rem, 4vw, 3.2rem)', marginBottom: '1rem' }}>
@@ -187,7 +187,7 @@ export function AppointmentPage() {
       </section>
 
       {/* Main Body */}
-      <section className="section" style={{ background: 'var(--bg-page)' }}>
+      <section className="section section-animate" style={{ background: 'var(--bg-page)' }}>
         <div className="container" style={{ maxWidth: '880px' }}>
           
           {submissionSuccess ? (
@@ -199,14 +199,14 @@ export function AppointmentPage() {
               background: '#FFFFFF', 
               padding: 'clamp(1.75rem, 5vw, 3.5rem) clamp(1.2rem, 4vw, 2.5rem)', 
               textAlign: 'center', 
-              borderRadius: 'var(--radius-xl)',
+              borderRadius: '4px',
               boxShadow: 'var(--shadow-xl)',
               animation: 'slideUp 0.3s ease-out'
             }}>
               <div style={{
                 width: '72px',
                 height: '72px',
-                borderRadius: '50%',
+                borderRadius: '4px',
                 background: '#D1FAE5',
                 color: '#059669',
                 display: 'flex',
@@ -217,7 +217,7 @@ export function AppointmentPage() {
                 <CheckCircle2 size={40} />
               </div>
 
-              <span className="badge badge-confirmed" style={{ fontSize: '0.85rem', padding: '0.4rem 1rem', marginBottom: '1rem' }}>
+              <span className="badge badge-confirmed" style={{ fontSize: '0.85rem', padding: '0.4rem 1rem', marginBottom: '1rem', borderRadius: '4px' }}>
                 Request Reference: #{submissionSuccess.id?.toUpperCase()}
               </span>
 
@@ -233,7 +233,7 @@ export function AppointmentPage() {
               <div style={{
                 background: '#F0FDFA',
                 border: '1.5px solid #CCFBF1',
-                borderRadius: 'var(--radius-md)',
+                borderRadius: '4px',
                 padding: '1.5rem',
                 textAlign: 'left',
                 maxWidth: '620px',
@@ -312,7 +312,7 @@ export function AppointmentPage() {
             <div className="glass-panel" style={{ 
               background: '#FFFFFF', 
               padding: 'clamp(1.25rem, 4vw, 2.5rem)', 
-              borderRadius: 'var(--radius-xl)',
+              borderRadius: '4px',
               boxShadow: 'var(--shadow-lg)'
             }}>
               

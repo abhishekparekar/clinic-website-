@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useTenant } from '../../features/tenant/TenantContext';
+import { useAppointmentModal } from '../../features/appointment/AppointmentModalContext';
 import { 
   ShieldCheck, 
   Sparkles, 
@@ -15,18 +16,19 @@ import {
 
 export function AboutPage() {
   const { tenant } = useTenant();
+  const { openAppointmentModal } = useAppointmentModal();
 
   return (
     <div>
       {/* Hero Header */}
-      <section style={{ 
+      <section className="section-animate" style={{ 
         background: 'var(--gradient-hero)', 
         padding: '4.5rem 0', 
         borderBottom: '1px solid var(--border-light)',
         textAlign: 'center'
       }}>
         <div className="container" style={{ maxWidth: '800px' }}>
-          <span className="section-tag">
+          <span className="section-tag" style={{ borderRadius: '4px' }}>
             <HeartHandshake size={14} /> Our Care Philosophy
           </span>
           <h1 style={{ fontSize: 'clamp(2.2rem, 4vw, 3.2rem)', marginBottom: '1.25rem' }}>
@@ -40,7 +42,7 @@ export function AboutPage() {
       </section>
 
       {/* Main Philosophy & Mission */}
-      <section className="section" style={{ background: '#FFFFFF' }}>
+      <section className="section section-animate" style={{ background: '#FFFFFF' }}>
         <div className="container">
           <div style={{
             display: 'grid',
@@ -49,7 +51,7 @@ export function AboutPage() {
             alignItems: 'center'
           }}>
             <div>
-              <span className="section-tag">
+              <span className="section-tag" style={{ borderRadius: '4px' }}>
                 <Sparkles size={14} /> The Patient Journey
               </span>
               <h2 style={{ fontSize: '2.2rem', marginBottom: '1.25rem' }}>
@@ -63,7 +65,7 @@ export function AboutPage() {
               </p>
 
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 150px), 1fr))', gap: '1rem' }}>
-                <div style={{ padding: '1.25rem', borderRadius: '12px', background: 'var(--bg-page)', border: '1px solid var(--border-light)' }}>
+                <div style={{ padding: '1.25rem', borderRadius: '4px', background: 'var(--bg-page)', border: '1px solid var(--border-light)' }}>
                   <div style={{ fontWeight: 800, fontSize: '1.8rem', color: 'var(--primary)', marginBottom: '0.2rem' }}>
                     100%
                   </div>
@@ -72,7 +74,7 @@ export function AboutPage() {
                   </div>
                 </div>
 
-                <div style={{ padding: '1.25rem', borderRadius: '12px', background: 'var(--bg-page)', border: '1px solid var(--border-light)' }}>
+                <div style={{ padding: '1.25rem', borderRadius: '4px', background: 'var(--bg-page)', border: '1px solid var(--border-light)' }}>
                   <div style={{ fontWeight: 800, fontSize: '1.8rem', color: 'var(--accent)', marginBottom: '0.2rem' }}>
                     Zero-Wait
                   </div>
@@ -84,7 +86,7 @@ export function AboutPage() {
             </div>
 
             <div style={{ position: 'relative' }}>
-              <div style={{ borderRadius: 'var(--radius-xl)', overflow: 'hidden', boxShadow: 'var(--shadow-xl)', border: '3px solid #FFFFFF' }}>
+              <div style={{ borderRadius: '4px', overflow: 'hidden', boxShadow: 'var(--shadow-xl)', border: '3px solid #FFFFFF' }}>
                 <img 
                   src="https://images.unsplash.com/photo-1629909615184-74f495363b67?auto=format&fit=crop&q=80&w=900" 
                   alt="Doctor performing consultation"
@@ -98,10 +100,10 @@ export function AboutPage() {
       </section>
 
       {/* Hospital-Grade Sterilization Protocols */}
-      <section className="section" style={{ background: 'var(--bg-page)' }}>
+      <section className="section section-animate" style={{ background: 'var(--bg-page)' }}>
         <div className="container">
           <div className="section-header">
-            <span className="section-tag">
+            <span className="section-tag" style={{ borderRadius: '4px' }}>
               <ShieldCheck size={14} /> Clinical Safety Guarantee
             </span>
             <h2 className="section-title">
@@ -154,7 +156,7 @@ export function AboutPage() {
                 className="glass-card"
                 style={{
                   padding: '1.75rem',
-                  borderRadius: 'var(--radius-md)',
+                  borderRadius: '4px',
                   background: '#FFFFFF',
                   position: 'relative'
                 }}
@@ -184,10 +186,10 @@ export function AboutPage() {
       </section>
 
       {/* Facilities & Diagnostic Technology */}
-      <section className="section" style={{ background: '#FFFFFF' }}>
+      <section className="section section-animate" style={{ background: '#FFFFFF' }}>
         <div className="container">
           <div className="section-header">
-            <span className="section-tag">
+            <span className="section-tag" style={{ borderRadius: '4px' }}>
               <Microscope size={14} /> Diagnostic Technology
             </span>
             <h2 className="section-title">
@@ -203,8 +205,8 @@ export function AboutPage() {
             gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
             gap: '2rem'
           }}>
-            <div className="glass-panel" style={{ padding: '2rem' }}>
-              <div style={{ width: '44px', height: '44px', borderRadius: '10px', background: 'var(--primary-light)', color: 'var(--primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.25rem' }}>
+            <div className="glass-panel" style={{ padding: '2rem', borderRadius: '4px' }}>
+              <div style={{ width: '44px', height: '44px', borderRadius: '4px', background: 'var(--primary-light)', color: 'var(--primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.25rem' }}>
                 <Microscope size={22} />
               </div>
               <h3 style={{ fontSize: '1.25rem', marginBottom: '0.5rem' }}>3D CBCT Digital Scanners</h3>
@@ -213,8 +215,8 @@ export function AboutPage() {
               </p>
             </div>
 
-            <div className="glass-panel" style={{ padding: '2rem' }}>
-              <div style={{ width: '44px', height: '44px', borderRadius: '10px', background: 'var(--accent-light)', color: 'var(--accent)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.25rem' }}>
+            <div className="glass-panel" style={{ padding: '2rem', borderRadius: '4px' }}>
+              <div style={{ width: '44px', height: '44px', borderRadius: '4px', background: 'var(--accent-light)', color: 'var(--accent)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.25rem' }}>
                 <Sparkles size={22} />
               </div>
               <h3 style={{ fontSize: '1.25rem', marginBottom: '0.5rem' }}>Intraoral 3D Optical Cameras</h3>
@@ -223,8 +225,8 @@ export function AboutPage() {
               </p>
             </div>
 
-            <div className="glass-panel" style={{ padding: '2rem' }}>
-              <div style={{ width: '44px', height: '44px', borderRadius: '10px', background: '#DCFCE7', color: '#15803D', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.25rem' }}>
+            <div className="glass-panel" style={{ padding: '2rem', borderRadius: '4px' }}>
+              <div style={{ width: '44px', height: '44px', borderRadius: '4px', background: '#DCFCE7', color: '#15803D', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.25rem' }}>
                 <ShieldCheck size={22} />
               </div>
               <h3 style={{ fontSize: '1.25rem', marginBottom: '0.5rem' }}>Dental Diode Lasers</h3>
@@ -237,7 +239,7 @@ export function AboutPage() {
       </section>
 
       {/* Call to action */}
-      <section style={{ background: 'var(--gradient-subtle)', padding: '4rem 0', textAlign: 'center' }}>
+      <section className="section-animate" style={{ background: 'var(--gradient-subtle)', padding: '4rem 0', textAlign: 'center' }}>
         <div className="container" style={{ maxWidth: '650px' }}>
           <h2 style={{ fontSize: '2.2rem', marginBottom: '1rem' }}>
             Consult With Our Specialists
@@ -245,10 +247,10 @@ export function AboutPage() {
           <p style={{ fontSize: '1.05rem', color: 'var(--text-muted)', marginBottom: '2rem' }}>
             Schedule an appointment for a comprehensive clinical assessment, digital x-ray imaging, and tailored care plan.
           </p>
-          <Link to="/appointment" className="btn btn-primary btn-lg">
+          <button onClick={() => openAppointmentModal()} className="btn btn-primary btn-lg">
             <Calendar size={18} />
             <span>Book Your Consultation Slot</span>
-          </Link>
+          </button>
         </div>
       </section>
 

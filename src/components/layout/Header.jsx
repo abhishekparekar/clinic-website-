@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { useTenant } from '../../features/tenant/TenantContext';
+import { useAppointmentModal } from '../../features/appointment/AppointmentModalContext';
 import { 
   Phone, 
   MessageSquare, 
@@ -13,6 +14,7 @@ import {
 
 export function Header() {
   const { tenant } = useTenant();
+  const { openAppointmentModal } = useAppointmentModal();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   // Close mobile drawer and dropdown on window resize if enlarged
@@ -48,7 +50,14 @@ export function Header() {
   ];
 
   return (
-    <header style={{ position: 'sticky', top: 0, zIndex: 900, width: '100%' }}>
+    <header style={{ position: 'sticky', top: 0, zIndex: 1000, width: '100%', boxShadow: '0 4px 20px rgba(0, 0, 0, 0.06)' }}>
+      {/* Top Radiant Linear Gradient Accent Bar */}
+      <div style={{
+        height: '3px',
+        width: '100%',
+        background: 'var(--gradient-accent-bar)'
+      }} />
+
       {/* Top Utility Bar (Optimized for Mobile & Desktop) */}
       <div style={{ 
         background: '#0F172A', 
@@ -114,7 +123,7 @@ export function Header() {
                 textDecoration: 'none',
                 background: 'rgba(255,255,255,0.1)',
                 padding: '0.25rem 0.65rem',
-                borderRadius: '9999px',
+                borderRadius: '4px',
                 fontWeight: 600
               }}
               title="Clinic Staff Portal"
@@ -130,10 +139,9 @@ export function Header() {
       {/* Main Navigation Bar */}
       <div style={{ 
         background: 'rgba(255, 255, 255, 0.96)', 
-        backdropFilter: 'blur(12px)',
-        WebkitBackdropFilter: 'blur(12px)',
+        backdropFilter: 'blur(16px)',
+        WebkitBackdropFilter: 'blur(16px)',
         borderBottom: '1px solid rgba(226, 232, 240, 0.85)',
-        boxShadow: 'var(--shadow-sm)',
         width: '100%'
       }}>
         <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '68px' }}>
@@ -143,7 +151,7 @@ export function Header() {
             <div style={{ 
               width: '40px', 
               height: '40px', 
-              borderRadius: '11px', 
+              borderRadius: '4px', 
               background: 'var(--gradient-primary)', 
               display: 'flex', 
               alignItems: 'center', 
@@ -228,15 +236,15 @@ export function Header() {
 
           {/* Desktop CTA & Mobile Hamburger Button */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
-            <Link 
-              to="/appointment" 
+            <button 
+              onClick={() => openAppointmentModal()}
               className="btn btn-primary"
               style={{ display: 'none' }}
               id="header-cta-appointment"
             >
               <Calendar size={16} />
               <span>Book Appointment</span>
-            </Link>
+            </button>
             <style>{`
               @media (min-width: 640px) {
                 #header-cta-appointment { display: inline-flex !important; }
@@ -310,7 +318,7 @@ export function Header() {
                   onClick={() => setMobileMenuOpen(false)}
                   style={({ isActive }) => ({
                     padding: '0.75rem 1rem',
-                    borderRadius: '10px',
+                    borderRadius: '4px',
                     color: isActive ? 'var(--primary)' : 'var(--text-main)',
                     background: isActive ? 'var(--primary-light)' : 'transparent',
                     fontWeight: isActive ? 700 : 600,
@@ -328,15 +336,17 @@ export function Header() {
 
             {/* Quick Actions & Links */}
             <div style={{ marginTop: 'auto', display: 'flex', flexDirection: 'column', gap: '0.75rem', paddingTop: '1rem', borderTop: '1px solid var(--border-light)' }}>
-              <Link 
-                to="/appointment" 
-                onClick={() => setMobileMenuOpen(false)}
+              <button 
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  openAppointmentModal();
+                }}
                 className="btn btn-primary"
                 style={{ width: '100%', fontSize: '0.95rem' }}
               >
                 <Calendar size={17} />
                 <span>Book Appointment</span>
-              </Link>
+              </button>
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem' }}>
                 <a 
@@ -369,7 +379,7 @@ export function Header() {
                   justifyContent: 'center',
                   gap: '0.4rem',
                   padding: '0.6rem',
-                  borderRadius: '8px',
+                  borderRadius: '4px',
                   background: '#F1F5F9',
                   color: '#475569',
                   fontSize: '0.8rem',

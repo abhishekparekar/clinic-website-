@@ -28,7 +28,7 @@ export function Footer() {
               <div style={{ 
                 width: '40px', 
                 height: '40px', 
-                borderRadius: '10px', 
+                borderRadius: '4px', 
                 background: 'var(--gradient-primary)', 
                 display: 'flex', 
                 alignItems: 'center', 
@@ -170,7 +170,7 @@ export function Footer() {
           <div style={{ 
             background: 'rgba(15, 118, 110, 0.15)', 
             border: '1px solid rgba(13, 148, 136, 0.3)', 
-            borderRadius: '12px', 
+            borderRadius: '4px', 
             padding: '1rem 1.25rem', 
             marginBottom: '2.5rem',
             display: 'flex',

@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTenant } from '../../features/tenant/TenantContext';
+import { useAppointmentModal } from '../../features/appointment/AppointmentModalContext';
 import { 
   MapPin, 
   Phone, 
@@ -15,18 +16,19 @@ import { Link } from 'react-router-dom';
 
 export function ContactPage() {
   const { tenant } = useTenant();
+  const { openAppointmentModal } = useAppointmentModal();
 
   return (
     <div>
       {/* Page Header */}
-      <section style={{ 
+      <section className="section-animate" style={{ 
         background: 'var(--gradient-hero)', 
         padding: '4.5rem 0', 
         borderBottom: '1px solid var(--border-light)',
         textAlign: 'center'
       }}>
         <div className="container" style={{ maxWidth: '800px' }}>
-          <span className="section-tag">
+          <span className="section-tag" style={{ borderRadius: '4px' }}>
             <MapPin size={14} /> Clinic Location & Hours
           </span>
           <h1 style={{ fontSize: 'clamp(2.2rem, 4vw, 3.2rem)', marginBottom: '1.25rem' }}>
@@ -39,7 +41,7 @@ export function ContactPage() {
       </section>
 
       {/* Main Grid: Contact Cards & Hours */}
-      <section className="section" style={{ background: '#FFFFFF' }}>
+      <section className="section section-animate" style={{ background: '#FFFFFF' }}>
         <div className="container">
           <div style={{
             display: 'grid',
@@ -55,8 +57,8 @@ export function ContactPage() {
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', marginBottom: '2.5rem' }}>
                 
                 {/* Physical Address Card */}
-                <div className="glass-panel" style={{ padding: '1.5rem', display: 'flex', gap: '1.25rem', alignItems: 'flex-start' }}>
-                  <div style={{ width: '42px', height: '42px', borderRadius: '10px', background: 'var(--primary-light)', color: 'var(--primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                <div className="glass-panel" style={{ padding: '1.5rem', display: 'flex', gap: '1.25rem', alignItems: 'flex-start', borderRadius: '4px' }}>
+                  <div style={{ width: '42px', height: '42px', borderRadius: '4px', background: 'var(--primary-light)', color: 'var(--primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                     <MapPin size={22} />
                   </div>
                   <div>
@@ -77,8 +79,8 @@ export function ContactPage() {
                 </div>
 
                 {/* Telephone */}
-                <div className="glass-panel" style={{ padding: '1.5rem', display: 'flex', gap: '1.25rem', alignItems: 'center' }}>
-                  <div style={{ width: '42px', height: '42px', borderRadius: '10px', background: 'var(--accent-light)', color: 'var(--accent)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                <div className="glass-panel" style={{ padding: '1.5rem', display: 'flex', gap: '1.25rem', alignItems: 'center', borderRadius: '4px' }}>
+                  <div style={{ width: '42px', height: '42px', borderRadius: '4px', background: 'var(--accent-light)', color: 'var(--accent)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                     <Phone size={22} />
                   </div>
                   <div style={{ flex: 1 }}>
@@ -93,8 +95,8 @@ export function ContactPage() {
                 </div>
 
                 {/* WhatsApp */}
-                <div className="glass-panel" style={{ padding: '1.5rem', display: 'flex', gap: '1.25rem', alignItems: 'center' }}>
-                  <div style={{ width: '42px', height: '42px', borderRadius: '10px', background: '#DCFCE7', color: '#15803D', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                <div className="glass-panel" style={{ padding: '1.5rem', display: 'flex', gap: '1.25rem', alignItems: 'center', borderRadius: '4px' }}>
+                  <div style={{ width: '42px', height: '42px', borderRadius: '4px', background: '#DCFCE7', color: '#15803D', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                     <MessageSquare size={22} />
                   </div>
                   <div style={{ flex: 1 }}>
@@ -114,8 +116,8 @@ export function ContactPage() {
                 </div>
 
                 {/* Email */}
-                <div className="glass-panel" style={{ padding: '1.5rem', display: 'flex', gap: '1.25rem', alignItems: 'center' }}>
-                  <div style={{ width: '42px', height: '42px', borderRadius: '10px', background: '#E0F2FE', color: '#0284C7', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                <div className="glass-panel" style={{ padding: '1.5rem', display: 'flex', gap: '1.25rem', alignItems: 'center', borderRadius: '4px' }}>
+                  <div style={{ width: '42px', height: '42px', borderRadius: '4px', background: '#E0F2FE', color: '#0284C7', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                     <Mail size={22} />
                   </div>
                   <div style={{ flex: 1 }}>
@@ -131,7 +133,7 @@ export function ContactPage() {
               {/* Emergency Guidance Notice */}
               {tenant?.contact?.emergencyNotice && (
                 <div style={{
-                  borderRadius: 'var(--radius-md)',
+                  borderRadius: '4px',
                   background: '#FFFBEB',
                   border: '1.5px solid #FCD34D',
                   padding: '1.25rem 1.5rem',
@@ -158,7 +160,7 @@ export function ContactPage() {
             <div>
               <h2 style={{ fontSize: '1.8rem', marginBottom: '1.5rem' }}>Weekly Operating Schedule</h2>
 
-              <div className="glass-panel" style={{ padding: '2rem', marginBottom: '2rem' }}>
+              <div className="glass-panel" style={{ padding: '2rem', marginBottom: '2rem', borderRadius: '4px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1.5rem', color: 'var(--primary)' }}>
                   <Clock size={20} />
                   <span style={{ fontWeight: 700, fontSize: '1.05rem' }}>Clinical Consultation Timings</span>
@@ -173,7 +175,7 @@ export function ContactPage() {
                         justifyContent: 'space-between',
                         alignItems: 'center',
                         padding: '0.65rem 0.5rem',
-                        borderRadius: '6px',
+                        borderRadius: '4px',
                         background: slot.closed ? '#FEF2F2' : 'transparent',
                         borderBottom: slot.closed ? 'none' : '1px solid var(--border-light)'
                       }}
@@ -191,10 +193,14 @@ export function ContactPage() {
                 </div>
 
                 <div style={{ marginTop: '2rem', paddingTop: '1.5rem', borderTop: '1px solid var(--border-light)', textAlign: 'center' }}>
-                  <Link to="/appointment" className="btn btn-primary btn-lg" style={{ width: '100%' }}>
+                  <button 
+                    onClick={() => openAppointmentModal()}
+                    className="btn btn-primary btn-lg" 
+                    style={{ width: '100%' }}
+                  >
                     <Calendar size={18} />
                     <span>Book Your Time Window</span>
-                  </Link>
+                  </button>
                 </div>
               </div>
 
@@ -222,7 +228,7 @@ export function ContactPage() {
 
             <div style={{ 
               height: 'clamp(260px, 42vw, 380px)', 
-              borderRadius: 'var(--radius-lg)', 
+              borderRadius: '4px', 
               overflow: 'hidden', 
               boxShadow: 'var(--shadow-md)', 
               border: '1px solid var(--border-light)',

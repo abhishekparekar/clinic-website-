@@ -1,10 +1,11 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
 import { useTenant } from '../../features/tenant/TenantContext';
+import { useAppointmentModal } from '../../features/appointment/AppointmentModalContext';
 import { Phone, MessageSquare, Calendar, MapPin } from 'lucide-react';
 
 export function MobileNav() {
   const { tenant } = useTenant();
+  const { openAppointmentModal } = useAppointmentModal();
 
   return (
     <nav 
@@ -53,7 +54,7 @@ export function MobileNav() {
         <div style={{
           width: '34px',
           height: '34px',
-          borderRadius: '50%',
+          borderRadius: 'var(--radius-sm)',
           background: 'var(--primary-light)',
           color: 'var(--primary)',
           display: 'flex',
@@ -85,7 +86,7 @@ export function MobileNav() {
         <div style={{
           width: '34px',
           height: '34px',
-          borderRadius: '50%',
+          borderRadius: 'var(--radius-sm)',
           background: '#DCFCE7',
           color: '#15803D',
           display: 'flex',
@@ -117,7 +118,7 @@ export function MobileNav() {
         <div style={{
           width: '34px',
           height: '34px',
-          borderRadius: '50%',
+          borderRadius: 'var(--radius-sm)',
           background: 'var(--accent-light)',
           color: 'var(--accent)',
           display: 'flex',
@@ -129,25 +130,26 @@ export function MobileNav() {
         <span>Map</span>
       </a>
 
-      {/* Book Appointment Slot */}
-      <NavLink 
-        to="/appointment"
-        style={({ isActive }) => ({
+      {/* Book Appointment Slot (Triggers Interactive Modal) */}
+      <button 
+        type="button"
+        onClick={() => openAppointmentModal()}
+        style={{
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
           gap: '0.2rem',
-          color: isActive ? 'var(--primary)' : 'var(--text-main)',
+          color: 'var(--primary)',
           fontSize: '0.7rem',
           fontWeight: 700,
-          textDecoration: 'none',
-          padding: '0.25rem 0'
-        })}
+          padding: '0.25rem 0',
+          cursor: 'pointer'
+        }}
       >
         <div style={{
           width: '34px',
           height: '34px',
-          borderRadius: '50%',
+          borderRadius: 'var(--radius-sm)',
           background: 'var(--gradient-primary)',
           color: '#FFFFFF',
           display: 'flex',
@@ -158,7 +160,7 @@ export function MobileNav() {
           <Calendar size={16} />
         </div>
         <span>Book Slot</span>
-      </NavLink>
+      </button>
     </nav>
   );
 }

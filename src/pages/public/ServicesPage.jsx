@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { useTenant } from '../../features/tenant/TenantContext';
+import { useAppointmentModal } from '../../features/appointment/AppointmentModalContext';
 import { dentalStore } from '../../lib/store';
 import { 
   Stethoscope, 
@@ -14,6 +15,7 @@ import {
 
 export function ServicesPage() {
   const { tenant } = useTenant();
+  const { openAppointmentModal } = useAppointmentModal();
   const services = dentalStore.getServices(tenant.id, true);
 
   const [searchQuery, setSearchQuery] = useState('');
@@ -43,14 +45,14 @@ export function ServicesPage() {
   return (
     <div>
       {/* Page Header */}
-      <section style={{ 
+      <section className="section-animate" style={{ 
         background: 'var(--gradient-hero)', 
         padding: '4.5rem 0', 
         borderBottom: '1px solid var(--border-light)',
         textAlign: 'center'
       }}>
         <div className="container" style={{ maxWidth: '800px' }}>
-          <span className="section-tag">
+          <span className="section-tag" style={{ borderRadius: '4px' }}>
             <Stethoscope size={14} /> Clinical Treatments & Services
           </span>
           <h1 style={{ fontSize: 'clamp(2.2rem, 4vw, 3.2rem)', marginBottom: '1.25rem' }}>
@@ -76,7 +78,7 @@ export function ServicesPage() {
                   onClick={() => setSelectedCategory(cat)}
                   style={{
                     padding: '0.5rem 1.1rem',
-                    borderRadius: '9999px',
+                    borderRadius: '4px',
                     fontSize: '0.875rem',
                     fontWeight: 600,
                     cursor: 'pointer',
@@ -101,7 +103,7 @@ export function ServicesPage() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="form-input"
-                style={{ paddingLeft: '2.75rem', paddingRight: '1rem' }}
+                style={{ paddingLeft: '2.75rem', paddingRight: '1rem', borderRadius: '4px' }}
               />
             </div>
 
@@ -110,7 +112,7 @@ export function ServicesPage() {
       </section>
 
       {/* Services Grid */}
-      <section className="section" style={{ background: 'var(--bg-page)' }}>
+      <section className="section section-animate" style={{ background: 'var(--bg-page)' }}>
         <div className="container">
           {filteredServices.length === 0 ? (
             <div style={{ textAlign: 'center', padding: '4rem 1rem' }}>
@@ -136,7 +138,7 @@ export function ServicesPage() {
                   className="glass-card"
                   style={{
                     background: '#FFFFFF',
-                    borderRadius: 'var(--radius-lg)',
+                    borderRadius: '4px',
                     padding: 'clamp(1.25rem, 3.5vw, 2rem)',
                     display: 'flex',
                     flexDirection: 'column',
@@ -152,7 +154,7 @@ export function ServicesPage() {
                       color: 'var(--primary)',
                       background: 'var(--primary-light)',
                       padding: '0.3rem 0.75rem',
-                      borderRadius: '9999px'
+                      borderRadius: '4px'
                     }}>
                       {service.category}
                     </span>
@@ -207,13 +209,13 @@ export function ServicesPage() {
                       <ArrowRight size={15} />
                     </Link>
 
-                    <Link 
-                      to={`/appointment?service=${service.slug}`}
+                    <button 
+                      onClick={() => openAppointmentModal(service.slug)}
                       className="btn btn-primary btn-sm"
                     >
                       <Calendar size={14} />
                       <span>Book Slot</span>
-                    </Link>
+                    </button>
                   </div>
                 </div>
               ))}
