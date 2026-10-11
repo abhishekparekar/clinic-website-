@@ -322,20 +322,6 @@ export const INITIAL_DOCTORS = [
     displayOrder: 1
   },
   {
-    id: 'doc-2',
-    tenantId: 'apex-dental',
-    name: 'Dr. Aisha Sen',
-    role: 'Microscopic Endodontist & Restorative Specialist',
-    qualifications: ['MDS (Conservative Dentistry & Endodontics)', 'BDS', 'Certified Micro-Endodontist (Carl Zeiss Academy)'],
-    bio: 'Dr. Aisha specializes in microscopic single-sitting root canal treatments, cracked tooth preservation, and aesthetic composite bonding. Her calm, reassuring chairside demeanor makes even the most anxious patients feel completely at ease.',
-    experienceYears: 11,
-    languages: ['English', 'Hindi', 'Bengali'],
-    scheduleDays: 'Mon, Wed, Thu, Fri, Sat (09:00 AM - 5:00 PM)',
-    photoUrl: 'https://images.unsplash.com/photo-1594824813583-4375b42d6342?auto=format&fit=crop&q=80&w=600',
-    published: true,
-    displayOrder: 2
-  },
-  {
     id: 'doc-3',
     tenantId: 'apex-dental',
     name: 'Dr. Rohan Kapoor',
@@ -347,7 +333,7 @@ export const INITIAL_DOCTORS = [
     scheduleDays: 'Tue, Thu, Sat (11:00 AM - 7:30 PM)',
     photoUrl: 'https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&q=80&w=600',
     published: true,
-    displayOrder: 3
+    displayOrder: 2
   },
   {
     id: 'doc-4',
@@ -361,7 +347,7 @@ export const INITIAL_DOCTORS = [
     scheduleDays: 'Mon, Tue, Thu, Sat (09:30 AM - 4:00 PM)',
     photoUrl: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=600',
     published: true,
-    displayOrder: 4
+    displayOrder: 3
   }
 ];
 
@@ -477,7 +463,7 @@ export const INITIAL_APPOINTMENTS = [
     consent: true,
     consentAt: '2026-10-08T11:20:00.000Z',
     status: 'confirmed',
-    internalNote: 'Confirmed slot with Dr. Aisha Sen for 5:30 PM.',
+    internalNote: 'Confirmed slot with Dr. Sameer Merchant for 5:30 PM.',
     source: 'website',
     createdAt: '2026-10-08T11:20:00.000Z',
     updatedAt: '2026-10-08T12:05:00.000Z',

@@ -390,7 +390,7 @@ export function AdminAppointments() {
               <textarea
                 id="editInternalNote"
                 rows={3}
-                placeholder="e.g. Patient prefers Dr. Aisha Sen. Slotted for Tuesday 4:00 PM. Advised pre-visit cleaning instructions..."
+                placeholder="e.g. Slotted for Tuesday 4:00 PM with Dr. Sameer Merchant. Advised pre-visit cleaning instructions..."
                 value={editInternalNote}
                 onChange={(e) => setEditInternalNote(e.target.value)}
                 className="form-textarea"

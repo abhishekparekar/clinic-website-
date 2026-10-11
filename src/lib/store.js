@@ -13,7 +13,7 @@ import {
 const STORAGE_KEYS = {
   TENANTS: 'dental_clinics_tenants_v1',
   SERVICES: 'dental_clinics_services_v1',
-  DOCTORS: 'dental_clinics_doctors_v1',
+  DOCTORS: 'dental_clinics_doctors_v2',
   FAQS: 'dental_clinics_faqs_v1',
   APPOINTMENTS: 'dental_clinics_appointments_v1',
   MEMBERS: 'dental_clinics_members_v1',
@@ -45,6 +45,13 @@ function saveToStorage(key, data) {
 let tenants = loadFromStorage(STORAGE_KEYS.TENANTS, INITIAL_TENANTS);
 let services = loadFromStorage(STORAGE_KEYS.SERVICES, INITIAL_SERVICES);
 let doctors = loadFromStorage(STORAGE_KEYS.DOCTORS, INITIAL_DOCTORS);
+// Permanent purge check for Dr. Aisha Sen across all browsers/mobile caches
+doctors = doctors.filter(d => d.id !== 'doc-2' && !d.name?.toLowerCase().includes('aisha'));
+try {
+  localStorage.removeItem('dental_clinics_doctors_v1');
+  localStorage.setItem(STORAGE_KEYS.DOCTORS, JSON.stringify(doctors));
+} catch {}
+
 let faqs = loadFromStorage(STORAGE_KEYS.FAQS, INITIAL_FAQS);
 let appointments = loadFromStorage(STORAGE_KEYS.APPOINTMENTS, INITIAL_APPOINTMENTS);
 let members = loadFromStorage(STORAGE_KEYS.MEMBERS, INITIAL_MEMBERS);
