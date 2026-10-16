@@ -35,7 +35,7 @@ export function AdminLayout() {
     { label: 'Treatments CMS', path: '/admin/services', icon: Stethoscope },
     { label: 'Dentists CMS', path: '/admin/doctors', icon: Users },
     { label: 'FAQ Management', path: '/admin/faqs', icon: HelpCircle },
-    { label: 'Clinic Branding & Sync', path: '/admin/clinic-settings', icon: Settings },
+    { label: 'Clinic Settings', path: '/admin/clinic-settings', icon: Settings },
   ];
 
   return (
