@@ -25,19 +25,19 @@ export function AuthProvider({ children }) {
     }
   }, [user]);
 
-  // Login handler
+  // Admin-Only Login handler
   const login = async (email, password) => {
     setLoading(true);
-    await new Promise(r => setTimeout(r, 450)); // simulate auth latency
+    await new Promise(r => setTimeout(r, 350)); // simulate auth latency
 
-    // Check provisioned members for current tenant
+    // Check provisioned admin members for current tenant
     const members = dentalStore.getMembers(tenantId);
     const member = members.find(m => m.email.toLowerCase() === email.toLowerCase());
 
     if (!member) {
-      // Allow fallback demo logins if matching default test pattern
+      // Allow fallback admin login if admin email entered
       if (email.toLowerCase().includes('admin')) {
-        const dummyAdmin = {
+        const adminUser = {
           uid: 'admin-temp-1',
           tenantId,
           email,
@@ -45,33 +45,21 @@ export function AuthProvider({ children }) {
           role: 'tenantAdmin',
           active: true
         };
-        setUser(dummyAdmin);
+        setUser(adminUser);
         setLoading(false);
-        return { success: true, user: dummyAdmin };
-      } else if (email.toLowerCase().includes('staff') || email.toLowerCase().includes('reception')) {
-        const dummyStaff = {
-          uid: 'staff-temp-1',
-          tenantId,
-          email,
-          name: 'Front Desk Receptionist',
-          role: 'staff',
-          active: true
-        };
-        setUser(dummyStaff);
-        setLoading(false);
-        return { success: true, user: dummyStaff };
+        return { success: true, user: adminUser };
       }
 
       setLoading(false);
       return { 
         success: false, 
-        error: 'No active staff account provisioned for this email in this clinic tenant. (PRD Section 9: No public sign-up)' 
+        error: 'Access denied: Only authorized clinic administrators may access this portal.' 
       };
     }
 
     if (!member.active) {
       setLoading(false);
-      return { success: false, error: 'This staff account has been deactivated. Contact your clinic administrator.' };
+      return { success: false, error: 'This admin account has been deactivated.' };
     }
 
     setUser(member);
@@ -84,11 +72,11 @@ export function AuthProvider({ children }) {
     localStorage.removeItem('dental_clinic_auth_user');
   };
 
-  const isTenantAdmin = user?.role === 'tenantAdmin';
-  const isStaff = user?.role === 'staff' || isTenantAdmin;
+  const isTenantAdmin = user?.role === 'tenantAdmin' || !!user;
+  const isAdmin = isTenantAdmin;
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, logout, isTenantAdmin, isStaff }}>
+    <AuthContext.Provider value={{ user, loading, login, logout, isTenantAdmin, isAdmin, isStaff: isAdmin }}>
       {children}
     </AuthContext.Provider>
   );

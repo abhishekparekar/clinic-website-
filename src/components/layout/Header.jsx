@@ -126,10 +126,10 @@ export function Header() {
                 borderRadius: '4px',
                 fontWeight: 600
               }}
-              title="Clinic Staff Portal"
+              title="Clinic Admin Portal"
             >
               <Lock size={12} />
-              <span>Staff Portal</span>
+              <span>Admin Portal</span>
             </Link>
           </div>
 
@@ -389,7 +389,7 @@ export function Header() {
                 }}
               >
                 <Lock size={13} />
-                <span>Clinic Staff Portal</span>
+                <span>Clinic Admin Portal</span>
               </Link>
             </div>
           </div>

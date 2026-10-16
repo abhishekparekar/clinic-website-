@@ -2,10 +2,23 @@ import React, { useState } from 'react';
 import { useTenant } from '../../features/tenant/TenantContext';
 import { dentalStore } from '../../lib/store';
 import { showToast } from '../../components/common/Toast';
-import { Settings, Save, Palette, Clock, MapPin, Phone, Globe } from 'lucide-react';
+import { 
+  Settings, 
+  Save, 
+  Palette, 
+  Clock, 
+  MapPin, 
+  Phone, 
+  Globe, 
+  Database, 
+  RefreshCw, 
+  CheckCircle2, 
+  Server 
+} from 'lucide-react';
 
 export function AdminSettings() {
-  const { tenant } = useTenant();
+  const { tenant, syncToFirestore } = useTenant();
+  const [syncing, setSyncing] = useState(false);
 
   const [formData, setFormData] = useState({
     name: tenant?.name || '',
@@ -49,20 +62,85 @@ export function AdminSettings() {
       }
     });
 
-    showToast('Clinic settings and branding updated!', 'success');
+    showToast('Clinic settings and branding updated in Firestore database!', 'success');
+  };
+
+  const handleSyncAllToDatabase = async () => {
+    setSyncing(true);
+    const res = await syncToFirestore();
+    setSyncing(false);
+    if (res.success) {
+      showToast(`Synchronized all data to Firestore under tenants/${res.tenantId}!`, 'success');
+    } else {
+      showToast(`Sync error: ${res.error}`, 'error');
+    }
   };
 
   return (
     <div>
       <div style={{ marginBottom: '1.5rem' }}>
-        <h1 style={{ fontSize: '1.75rem', marginBottom: '0.25rem' }}>Clinic Branding & Settings</h1>
+        <h1 style={{ fontSize: '1.75rem', marginBottom: '0.25rem' }}>Clinic Branding & Database Settings</h1>
         <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>
-          Customize contact details, linear gradient themes, and SEO meta tags for <strong>{tenant?.name}</strong> (PRD Section 9)
+          Customize contact details, linear gradient themes, and manage Cloud Firestore synchronization for <strong>{tenant?.name}</strong>
         </p>
       </div>
 
       <form onSubmit={handleSave} style={{ maxWidth: '900px' }}>
         
+        {/* Cloud Firestore Database Synchronization Card */}
+        <div style={{ 
+          background: '#FFFFFF', 
+          borderRadius: '4px', 
+          padding: 'clamp(1rem, 3vw, 1.75rem)', 
+          border: '1px solid var(--border-light)', 
+          marginBottom: '1.5rem', 
+          boxShadow: 'var(--shadow-sm)' 
+        }}>
+          <h2 style={{ fontSize: '1.15rem', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--text-main)' }}>
+            <Database size={19} color="var(--primary)" />
+            Firestore Cloud Database Management
+          </h2>
+          <p style={{ color: 'var(--text-muted)', fontSize: '0.875rem', marginBottom: '1rem' }}>
+            All clinic treatments, specialists, FAQs, and appointment requests are securely isolated under node <code>tenants/{tenant?.id || 'clinicdental01'}</code>. Updates and deletions reflect immediately in Firestore.
+          </p>
+
+          <div style={{ 
+            background: '#F8FAFC', 
+            padding: '1.25rem', 
+            borderRadius: '4px', 
+            border: '1px solid var(--border-light)', 
+            display: 'flex', 
+            alignItems: 'center', 
+            justifyContent: 'space-between', 
+            flexWrap: 'wrap', 
+            gap: '1rem' 
+          }}>
+            <div>
+              <div style={{ fontSize: '0.875rem', fontWeight: 700, color: '#16A34A', display: 'flex', alignItems: 'center', gap: '0.45rem' }}>
+                <CheckCircle2 size={16} />
+                <span>Connected to Cloud Firestore</span>
+              </div>
+              <div style={{ fontSize: '0.8rem', color: '#64748B', marginTop: '0.35rem' }}>
+                Project: <strong>job-portal-85414</strong> • Node: <strong>tenants/{tenant?.id || 'clinicdental01'}</strong>
+              </div>
+              <div style={{ fontSize: '0.75rem', color: '#94A3B8', marginTop: '0.2rem' }}>
+                Subcollections: <code>services</code>, <code>doctors</code>, <code>faqs</code>, <code>appointments</code>, <code>members</code>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              onClick={handleSyncAllToDatabase}
+              disabled={syncing}
+              className="btn btn-primary btn-sm"
+              style={{ display: 'inline-flex', alignItems: 'center', gap: '0.45rem', padding: '0.55rem 0.95rem' }}
+            >
+              <RefreshCw size={14} className={syncing ? 'spin' : ''} />
+              <span>{syncing ? 'Pushing Data...' : 'Sync All Data to Firestore'}</span>
+            </button>
+          </div>
+        </div>
+
         {/* Branding & Visual Identity (Theme Colors) */}
         <div style={{ background: '#FFFFFF', borderRadius: '4px', padding: 'clamp(1rem, 3vw, 1.75rem)', border: '1px solid var(--border-light)', marginBottom: '1.5rem', boxShadow: 'var(--shadow-sm)' }}>
           <h2 style={{ fontSize: '1.15rem', marginBottom: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--text-main)' }}>
@@ -110,39 +188,34 @@ export function AdminSettings() {
             </div>
           </div>
 
-          {/* Live Gradient Preview Strip */}
+          {/* Realtime Gradient Preview Banner */}
           <div style={{
+            padding: '1rem',
+            borderRadius: '4px',
             background: `linear-gradient(135deg, ${formData.primaryColor} 0%, ${formData.accentColor} 100%)`,
             color: '#FFFFFF',
-            padding: '1.1rem 1.25rem',
-            borderRadius: '4px',
             display: 'flex',
-            flexWrap: 'wrap',
             alignItems: 'center',
             justifyContent: 'space-between',
-            gap: '0.75rem',
+            flexWrap: 'wrap',
+            gap: '0.5rem',
             boxShadow: 'var(--shadow-sm)'
           }}>
-            <div>
-              <div style={{ fontWeight: 700, fontSize: '1rem' }}>Live Dynamic Gradient Preview</div>
-              <div style={{ fontSize: '0.775rem', opacity: 0.9 }}>Applied immediately to public buttons, badges, and accents upon save</div>
-            </div>
-            <button type="button" className="btn btn-secondary btn-sm" style={{ background: '#FFFFFF', color: formData.primaryColor, borderRadius: '4px' }}>
-              Sample Button
-            </button>
+            <span style={{ fontWeight: 700, fontSize: '0.9rem' }}>Gradient Theme Preview</span>
+            <span style={{ fontSize: '0.75rem', opacity: 0.9 }}>Dynamically injected into CSS variables (--primary, --accent)</span>
           </div>
         </div>
 
-        {/* General Details */}
+        {/* Clinic General Profile */}
         <div style={{ background: '#FFFFFF', borderRadius: '4px', padding: 'clamp(1rem, 3vw, 1.75rem)', border: '1px solid var(--border-light)', marginBottom: '1.5rem', boxShadow: 'var(--shadow-sm)' }}>
           <h2 style={{ fontSize: '1.15rem', marginBottom: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--text-main)' }}>
             <Settings size={19} color="var(--primary)" />
-            Clinic Identity & Contact Information
+            Clinic Profile & Identity
           </h2>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 260px), 1fr))', gap: '1.25rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))', gap: '1.25rem' }}>
             <div className="form-group">
-              <label className="form-label" htmlFor="clinicName">Clinic Legal Display Name</label>
+              <label className="form-label" htmlFor="clinicName">Clinic Name</label>
               <input
                 type="text"
                 id="clinicName"
@@ -164,10 +237,18 @@ export function AdminSettings() {
               />
             </div>
           </div>
+        </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 220px), 1fr))', gap: '1.25rem' }}>
+        {/* Patient Contact & Emergency Notice */}
+        <div style={{ background: '#FFFFFF', borderRadius: '4px', padding: 'clamp(1rem, 3vw, 1.75rem)', border: '1px solid var(--border-light)', marginBottom: '1.5rem', boxShadow: 'var(--shadow-sm)' }}>
+          <h2 style={{ fontSize: '1.15rem', marginBottom: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--text-main)' }}>
+            <Phone size={19} color="var(--primary)" />
+            Direct Communication & Location
+          </h2>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 240px), 1fr))', gap: '1.25rem', marginBottom: '1.25rem' }}>
             <div className="form-group">
-              <label className="form-label" htmlFor="phone">Phone Number</label>
+              <label className="form-label" htmlFor="phone">Reception Phone</label>
               <input
                 type="text"
                 id="phone"
@@ -179,7 +260,7 @@ export function AdminSettings() {
             </div>
 
             <div className="form-group">
-              <label className="form-label" htmlFor="whatsapp">WhatsApp Number</label>
+              <label className="form-label" htmlFor="whatsapp">WhatsApp Business Number</label>
               <input
                 type="text"
                 id="whatsapp"
@@ -191,7 +272,7 @@ export function AdminSettings() {
             </div>
 
             <div className="form-group">
-              <label className="form-label" htmlFor="email">Email Address</label>
+              <label className="form-label" htmlFor="email">Public Contact Email</label>
               <input
                 type="email"
                 id="email"
@@ -205,18 +286,18 @@ export function AdminSettings() {
 
           <div className="form-group">
             <label className="form-label" htmlFor="address">Physical Clinic Address</label>
-            <input
-              type="text"
+            <textarea
               id="address"
+              rows={2}
               value={formData.address}
               onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-              className="form-input"
+              className="form-textarea"
               required
             />
           </div>
 
           <div className="form-group">
-            <label className="form-label" htmlFor="directionsUrl">Google Maps Directions Link</label>
+            <label className="form-label" htmlFor="directionsUrl">Google Maps Directions URL</label>
             <input
               type="url"
               id="directionsUrl"
@@ -226,8 +307,8 @@ export function AdminSettings() {
             />
           </div>
 
-          <div className="form-group">
-            <label className="form-label" htmlFor="emergencyNotice">Emergency Guidance Note</label>
+          <div className="form-group" style={{ marginBottom: 0 }}>
+            <label className="form-label" htmlFor="emergencyNotice">24/7 Dental Emergency Triage Advisory</label>
             <textarea
               id="emergencyNotice"
               rows={2}

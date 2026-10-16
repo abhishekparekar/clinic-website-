@@ -62,7 +62,7 @@ export function AdminOverview() {
             Welcome back, {user?.name}
           </h1>
           <p style={{ color: 'var(--text-muted)', fontSize: '0.875rem' }}>
-            Clinic Workspace: <strong>{tenant?.name}</strong> • Role: <strong style={{ color: 'var(--primary)', textTransform: 'capitalize' }}>{user?.role === 'tenantAdmin' ? 'Admin' : 'Front Desk Staff'}</strong>
+            Clinic Workspace: <strong>{tenant?.name}</strong> • Role: <strong style={{ color: 'var(--primary)' }}>Clinic Administrator</strong>
           </p>
         </div>
 

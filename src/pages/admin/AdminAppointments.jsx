@@ -18,8 +18,8 @@ import {
   CheckCircle2, 
   FileText,
   User,
-  ShieldCheck,
-  MessageSquare
+  MessageSquare,
+  Trash2
 } from 'lucide-react';
 
 export function AdminAppointments() {
@@ -71,11 +71,21 @@ export function AdminAppointments() {
       selectedApt.id, 
       editStatus, 
       editInternalNote, 
-      user?.name || 'Staff'
+      user?.name || 'Administrator'
     );
 
-    showToast(`Appointment #${selectedApt.id} updated to ${editStatus}`, 'success');
+    showToast(`Appointment #${selectedApt.id} updated and saved to database`, 'success');
     setSelectedApt(null);
+  };
+
+  const handleDeleteAppointment = (aptId, patientName = '') => {
+    if (window.confirm(`Are you sure you want to permanently delete appointment #${aptId}${patientName ? ' for ' + patientName : ''}? This will permanently remove it from the Firestore database.`)) {
+      dentalStore.deleteAppointment(tenant.id, aptId);
+      showToast(`Appointment #${aptId} deleted from database`, 'info');
+      if (selectedApt && selectedApt.id === aptId) {
+        setSelectedApt(null);
+      }
+    }
   };
 
   // Export to CSV
@@ -260,15 +270,25 @@ export function AdminAppointments() {
                       {formatDateTime(apt.createdAt)}
                     </td>
                     <td style={{ textAlign: 'right' }}>
-                      <button
-                        onClick={() => openDetailModal(apt)}
-                        className="btn btn-secondary btn-sm"
-                        style={{ padding: '0.35rem 0.65rem', fontSize: '0.8rem' }}
-                        title="View & Edit Status"
-                      >
-                        <Edit3 size={13} />
-                        <span>Review</span>
-                      </button>
+                      <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}>
+                        <button
+                          onClick={() => openDetailModal(apt)}
+                          className="btn btn-secondary btn-sm"
+                          style={{ padding: '0.35rem 0.65rem', fontSize: '0.8rem' }}
+                          title="View & Edit Status"
+                        >
+                          <Edit3 size={13} />
+                          <span>Review</span>
+                        </button>
+                        <button
+                          onClick={() => handleDeleteAppointment(apt.id, apt.patientName)}
+                          className="btn btn-secondary btn-sm"
+                          style={{ padding: '0.35rem 0.5rem', fontSize: '0.8rem', color: '#DC2626', borderColor: '#FECACA' }}
+                          title="Delete from Database"
+                        >
+                          <Trash2 size={13} />
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ))
@@ -348,6 +368,14 @@ export function AdminAppointments() {
                   <Edit3 size={13} />
                   <span>Review</span>
                 </button>
+                <button
+                  onClick={() => handleDeleteAppointment(apt.id, apt.patientName)}
+                  className="btn btn-secondary btn-sm"
+                  style={{ padding: '0.45rem 0.65rem', fontSize: '0.8rem', color: '#DC2626', borderColor: '#FECACA' }}
+                  title="Delete from Database"
+                >
+                  <Trash2 size={13} />
+                </button>
               </div>
             </div>
           ))
@@ -361,15 +389,26 @@ export function AdminAppointments() {
         title={`Enquiry Detail: #${selectedApt?.id}`}
         maxWidth="680px"
         footer={
-          <>
-            <button onClick={() => setSelectedApt(null)} className="btn btn-secondary">
-              Cancel
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', flexWrap: 'wrap', gap: '0.5rem' }}>
+            <button 
+              type="button"
+              onClick={() => handleDeleteAppointment(selectedApt.id, selectedApt.patientName)} 
+              className="btn btn-secondary btn-sm"
+              style={{ color: '#DC2626', borderColor: '#FCA5A5', background: '#FEF2F2' }}
+            >
+              <Trash2 size={14} />
+              <span>Delete from Database</span>
             </button>
-            <button onClick={handleSaveStatus} className="btn btn-primary">
-              <CheckCircle2 size={16} />
-              <span>Save Status & Notes</span>
-            </button>
-          </>
+            <div style={{ display: 'flex', gap: '0.5rem' }}>
+              <button onClick={() => setSelectedApt(null)} className="btn btn-secondary">
+                Cancel
+              </button>
+              <button onClick={handleSaveStatus} className="btn btn-primary">
+                <CheckCircle2 size={16} />
+                <span>Save to Database</span>
+              </button>
+            </div>
+          </div>
         }
       >
         {selectedApt && (
@@ -456,10 +495,10 @@ export function AdminAppointments() {
               </div>
             </div>
 
-            {/* Staff Internal Note (Restricted, not shown publicly) */}
+            {/* Admin Internal Note (Restricted to Administrator) */}
             <div className="form-group" style={{ marginBottom: 0 }}>
               <label className="form-label" htmlFor="editInternalNote">
-                Staff Internal Clinical/Reception Notes (Private to Clinic Staff):
+                Admin Internal Notes (Saved to Database):
               </label>
               <textarea
                 id="editInternalNote"

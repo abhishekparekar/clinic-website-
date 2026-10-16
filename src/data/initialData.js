@@ -2,6 +2,51 @@
 // Conforms directly to PRD Data Model (Section 11)
 
 export const INITIAL_TENANTS = {
+  'clinicdental01': {
+    id: 'clinicdental01',
+    name: 'Apex Dental & Implant Studio',
+    slug: 'clinicdental01',
+    tagline: 'Precision Care. Painless Dentistry. Radiant Smiles.',
+    status: 'active',
+    published: true,
+    domain: 'clinicdental01.clinic.local',
+    branding: {
+      primaryColor: '#0F766E', // Deep Medical Teal
+      accentColor: '#06B6D4',  // Ocean Cyan
+      logoText: 'Apex Dental',
+      badgeText: 'NABH Accredited & ISO 9001 Certified'
+    },
+    contact: {
+      phone: '+91 98201 23456',
+      phoneRaw: '+919820123456',
+      email: 'care@apexdentalstudio.com',
+      whatsapp: '+919820123456',
+      whatsappDisplay: '+91 98201 23456',
+      address: 'Suite 302, Linking Road, Bandra West, Mumbai, Maharashtra 400050',
+      directionsUrl: 'https://maps.google.com/?q=Linking+Road+Bandra+West+Mumbai',
+      mapEmbedUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3771.441113271424!2d72.8318!3d19.0560!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTnCsDAzJzIxLjYiTiA3MsKwNDknNTQuNSJF!5e0!3m2!1sen!2sin!4v1620000000000!5m2!1sen!2sin',
+      emergencyNotice: 'For urgent dental trauma or acute tooth pain during non-clinic hours, call our 24/7 on-call triage line at +91 98201 23456.'
+    },
+    openingHours: [
+      { day: 'Monday', open: '09:00', close: '20:00', closed: false },
+      { day: 'Tuesday', open: '09:00', close: '20:00', closed: false },
+      { day: 'Wednesday', open: '09:00', close: '20:00', closed: false },
+      { day: 'Thursday', open: '09:00', close: '20:00', closed: false },
+      { day: 'Friday', open: '09:00', close: '20:00', closed: false },
+      { day: 'Saturday', open: '09:00', close: '19:00', closed: false },
+      { day: 'Sunday', open: '10:00', close: '14:00', closed: false }
+    ],
+    stats: [
+      { label: 'Years of Clinical Practice', value: '16+' },
+      { label: 'Restorative & Implant Smiles', value: '12,500+' },
+      { label: 'Specialist Clinicians', value: '4 Senior MDS' },
+      { label: 'Sterilization Level', value: 'Class-B Autoclave' }
+    ],
+    seo: {
+      title: 'Apex Dental Studio | Painless Dentistry & Implants in Bandra, Mumbai',
+      description: 'Expert dental care in Bandra West featuring 3D CBCT digital diagnostics, computer-guided dental implants, painless laser dentistry, and clear aligners.'
+    }
+  },
   'apex-dental': {
     id: 'apex-dental',
     name: 'Apex Dental & Implant Studio',
@@ -529,5 +574,24 @@ export const INITIAL_MEMBERS = [
     role: 'staff',
     active: true,
     createdAt: '2026-02-15T00:00:00.000Z'
+  },
+  {
+    uid: 'user-admin-c01',
+    tenantId: 'clinicdental01',
+    email: 'admin@apexdentalstudio.com',
+    name: 'Dr. Sameer Merchant',
+    role: 'tenantAdmin',
+    active: true,
+    createdAt: '2026-01-01T00:00:00.000Z'
+  },
+  {
+    uid: 'user-staff-c01',
+    tenantId: 'clinicdental01',
+    email: 'reception@apexdentalstudio.com',
+    name: 'Pooja Varma (Front Desk Coordinator)',
+    role: 'staff',
+    active: true,
+    createdAt: '2026-02-15T00:00:00.000Z'
   }
 ];
+

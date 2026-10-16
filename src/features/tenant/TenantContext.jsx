@@ -4,7 +4,7 @@ import { dentalStore } from '../../lib/store';
 const TenantContext = createContext(null);
 
 export function TenantProvider({ children }) {
-  // Support switching tenant via query param (?tenant=lumina-smiles) or saved state
+  // Support switching tenant via query param (?tenant=clinicdental01) or saved state, default to clinicdental01
   const [tenantId, setTenantId] = useState(() => {
     try {
       const urlParams = new URLSearchParams(window.location.search);
@@ -19,17 +19,26 @@ export function TenantProvider({ children }) {
     } catch (e) {
       console.warn('Tenant init error:', e);
     }
-    return 'apex-dental';
+    return 'clinicdental01';
   });
 
   const [tenant, setTenant] = useState(() => dentalStore.getTenantById(tenantId));
   const [allTenants, setAllTenants] = useState(() => dentalStore.getAllTenants());
+  const [firestoreStatus, setFirestoreStatus] = useState(() => dentalStore.getFirestoreSyncStatus());
+
+  // Initialize live Firestore sync on mount & whenever tenant changes
+  useEffect(() => {
+    dentalStore.initFirestoreSync(tenantId).then(() => {
+      setFirestoreStatus(dentalStore.getFirestoreSyncStatus());
+    });
+  }, [tenantId]);
 
   // Listen to store updates
   useEffect(() => {
     const handleUpdate = () => {
       setAllTenants(dentalStore.getAllTenants());
       setTenant(dentalStore.getTenantById(tenantId));
+      setFirestoreStatus(dentalStore.getFirestoreSyncStatus());
     };
 
     window.addEventListener('dental_store_updated', handleUpdate);
@@ -74,8 +83,21 @@ export function TenantProvider({ children }) {
     }
   };
 
+  const syncToFirestore = async () => {
+    const result = await dentalStore.saveAllToFirestore(tenantId);
+    setFirestoreStatus(dentalStore.getFirestoreSyncStatus());
+    return result;
+  };
+
   return (
-    <TenantContext.Provider value={{ tenantId, tenant, allTenants, switchTenant }}>
+    <TenantContext.Provider value={{ 
+      tenantId, 
+      tenant, 
+      allTenants, 
+      switchTenant, 
+      firestoreStatus,
+      syncToFirestore 
+    }}>
       {children}
     </TenantContext.Provider>
   );

@@ -209,7 +209,7 @@ export function Footer() {
             </Link>
             <span>•</span>
             <Link to="/admin" style={{ color: '#94A3B8', textDecoration: 'none' }}>
-              Staff Login
+              Admin Login
             </Link>
             <span>•</span>
             <span style={{ color: '#64748B' }}>

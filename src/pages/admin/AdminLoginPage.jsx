@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate, useLocation, Link } from 'react-router-dom';
+import { useNavigate, Link, Navigate } from 'react-router-dom';
 import { useAuth } from '../../features/auth/AuthContext';
 import { useTenant } from '../../features/tenant/TenantContext';
 import { showToast } from '../../components/common/Toast';
@@ -9,7 +9,6 @@ export function AdminLoginPage() {
   const { login, user } = useAuth();
   const { tenant } = useTenant();
   const navigate = useNavigate();
-  const location = useLocation();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -18,8 +17,7 @@ export function AdminLoginPage() {
 
   // If already logged in, redirect to admin overview
   if (user) {
-    navigate('/admin', { replace: true });
-    return null;
+    return <Navigate to="/admin" replace />;
   }
 
   const handleLogin = async (e) => {
@@ -27,7 +25,7 @@ export function AdminLoginPage() {
     setError('');
 
     if (!email) {
-      setError('Please provide your staff email.');
+      setError('Please provide your administrator email.');
       return;
     }
 
@@ -44,18 +42,16 @@ export function AdminLoginPage() {
     }
   };
 
-  const handleQuickLogin = async (role) => {
+  const handleQuickLogin = async () => {
     setLoading(true);
-    const demoEmail = role === 'admin' 
-      ? 'admin@apexdentalstudio.com' 
-      : 'reception@apexdentalstudio.com';
+    const demoEmail = 'admin@apexdentalstudio.com';
     
     setEmail(demoEmail);
     const res = await login(demoEmail, 'demo123');
     setLoading(false);
 
     if (res.success) {
-      showToast(`Logged in as ${res.user.name} (${res.user.role})`, 'success');
+      showToast(`Logged in as Administrator (${res.user.name})`, 'success');
       navigate('/admin');
     }
   };
@@ -67,53 +63,63 @@ export function AdminLoginPage() {
       alignItems: 'center',
       justifyContent: 'center',
       background: 'linear-gradient(135deg, #0F172A 0%, #1E293B 100%)',
-      padding: 'clamp(1rem, 3vw, 2rem) clamp(0.75rem, 2.5vw, 1.5rem)'
+      padding: '1.5rem',
+      position: 'relative'
     }}>
+      {/* Return to Public Website link */}
+      <Link 
+        to="/"
+        style={{
+          position: 'absolute',
+          top: '1.5rem',
+          left: '1.5rem',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '0.4rem',
+          color: '#94A3B8',
+          textDecoration: 'none',
+          fontSize: '0.85rem',
+          fontWeight: 600,
+          background: 'rgba(255,255,255,0.05)',
+          padding: '0.4rem 0.85rem',
+          borderRadius: '4px',
+          border: '1px solid rgba(255,255,255,0.1)'
+        }}
+      >
+        <ArrowLeft size={14} />
+        <span>Back to Clinic Site</span>
+      </Link>
+
+      {/* Login Card */}
       <div style={{
-        maxWidth: '460px',
         width: '100%',
+        maxWidth: '440px',
         background: '#FFFFFF',
         borderRadius: '4px',
-        padding: 'clamp(1.25rem, 4vw, 2.25rem)',
         boxShadow: 'var(--shadow-xl)',
-        position: 'relative'
+        padding: 'clamp(1.5rem, 4vw, 2.25rem)',
+        border: '1px solid var(--border-light)'
       }}>
         
-        {/* Back Link */}
-        <Link 
-          to="/" 
-          style={{ 
-            display: 'inline-flex', 
-            alignItems: 'center', 
-            gap: '0.4rem', 
-            fontSize: '0.825rem', 
-            color: 'var(--text-subtle)', 
-            marginBottom: '1.25rem',
-            textDecoration: 'none'
-          }}
-        >
-          <ArrowLeft size={15} /> Return to Public Website
-        </Link>
-
         {/* Header */}
-        <div style={{ textAlign: 'center', marginBottom: '1.75rem' }}>
+        <div style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
           <div style={{
-            width: '50px',
-            height: '50px',
+            width: '52px',
+            height: '52px',
+            margin: '0 auto 1rem',
             borderRadius: '4px',
             background: 'var(--gradient-primary)',
             color: '#FFFFFF',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            margin: '0 auto 0.85rem auto',
             boxShadow: '0 4px 14px rgba(15, 118, 110, 0.4)'
           }}>
             <Lock size={24} />
           </div>
 
           <h1 style={{ fontSize: 'clamp(1.3rem, 3vw, 1.6rem)', color: 'var(--text-main)', marginBottom: '0.35rem' }}>
-            Staff & Admin Sign In
+            Admin Portal Sign In
           </h1>
 
           <div style={{ 
@@ -132,7 +138,7 @@ export function AdminLoginPage() {
           </div>
         </div>
 
-        {/* Demo Fast-Login Buttons for Evaluator Convenience */}
+        {/* Demo Fast-Login Button for Evaluator Convenience */}
         <div style={{ 
           background: '#F8FAFC', 
           border: '1px dashed var(--border-light)', 
@@ -142,28 +148,17 @@ export function AdminLoginPage() {
           textAlign: 'center'
         }}>
           <div style={{ fontSize: '0.725rem', fontWeight: 700, color: '#64748B', textTransform: 'uppercase', marginBottom: '0.5rem' }}>
-            One-Click Evaluation Credentials
+            Admin Fast-Access (One Click)
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: '0.5rem' }}>
-            <button
-              type="button"
-              onClick={() => handleQuickLogin('admin')}
-              className="btn btn-secondary btn-sm"
-              style={{ fontSize: '0.75rem', padding: '0.4rem 0.5rem', borderRadius: '4px' }}
-            >
-              <Sparkles size={12} color="var(--primary)" />
-              <span>Clinic Admin</span>
-            </button>
-            <button
-              type="button"
-              onClick={() => handleQuickLogin('staff')}
-              className="btn btn-secondary btn-sm"
-              style={{ fontSize: '0.75rem', padding: '0.4rem 0.5rem', borderRadius: '4px' }}
-            >
-              <Sparkles size={12} color="var(--primary)" />
-              <span>Front Desk Staff</span>
-            </button>
-          </div>
+          <button
+            type="button"
+            onClick={handleQuickLogin}
+            className="btn btn-primary btn-sm"
+            style={{ width: '100%', justifyContent: 'center', fontSize: '0.825rem', padding: '0.55rem', borderRadius: '4px' }}
+          >
+            <Sparkles size={14} />
+            <span>Sign In as Clinic Administrator</span>
+          </button>
         </div>
 
         {/* Error message */}
@@ -181,55 +176,78 @@ export function AdminLoginPage() {
             gap: '0.5rem'
           }}>
             <ShieldAlert size={16} style={{ flexShrink: 0, marginTop: '2px' }} />
-            <span>{error}</span>
+            <div>{error}</div>
           </div>
         )}
 
-        {/* Login Form */}
+        {/* Form */}
         <form onSubmit={handleLogin}>
           <div className="form-group">
-            <label className="form-label" htmlFor="email">
-              <Mail size={14} color="var(--primary)" />
-              <span>Authorized Email</span>
+            <label className="form-label" htmlFor="adminEmail">
+              Administrator Email
             </label>
-            <input
-              type="email"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="e.g. admin@apexdentalstudio.com"
-              className="form-input"
-              required
-            />
+            <div style={{ position: 'relative' }}>
+              <input 
+                id="adminEmail"
+                type="email" 
+                className="form-input"
+                style={{ paddingLeft: '2.5rem', borderRadius: '4px' }}
+                placeholder="admin@apexdentalstudio.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                autoComplete="email"
+                required
+              />
+              <Mail 
+                size={16} 
+                style={{ position: 'absolute', left: '0.85rem', top: '50%', transform: 'translateY(-50%)', color: '#94A3B8' }} 
+              />
+            </div>
           </div>
 
-          <div className="form-group">
-            <label className="form-label" htmlFor="password">
-              <Lock size={14} color="var(--primary)" />
-              <span>Password</span>
-            </label>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="••••••••"
-              className="form-input"
-            />
+          <div className="form-group" style={{ marginBottom: '1.5rem' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.35rem' }}>
+              <label className="form-label" htmlFor="adminPass" style={{ marginBottom: 0 }}>
+                Password
+              </label>
+            </div>
+            <div style={{ position: 'relative' }}>
+              <input 
+                id="adminPass"
+                type="password" 
+                className="form-input"
+                style={{ paddingLeft: '2.5rem', borderRadius: '4px' }}
+                placeholder="••••••••••••"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                autoComplete="current-password"
+              />
+              <Lock 
+                size={16} 
+                style={{ position: 'absolute', left: '0.85rem', top: '50%', transform: 'translateY(-50%)', color: '#94A3B8' }} 
+              />
+            </div>
           </div>
 
-          <button
-            type="submit"
+          <button 
+            type="submit" 
             className="btn btn-primary"
-            style={{ width: '100%', marginTop: '0.5rem' }}
+            style={{ width: '100%', justifyContent: 'center', borderRadius: '4px' }}
             disabled={loading}
           >
-            {loading ? 'Authenticating...' : 'Sign In to Workspace'}
+            {loading ? 'Authenticating...' : 'Sign In as Administrator'}
           </button>
         </form>
 
-        <div style={{ textAlign: 'center', marginTop: '1.5rem', fontSize: '0.75rem', color: '#94A3B8' }}>
-          Restricted access. In accordance with PRD Section 9, staff accounts must be provisioned by clinic administrator.
+        <div style={{ 
+          marginTop: '1.5rem', 
+          paddingTop: '1.25rem', 
+          borderTop: '1px solid var(--border-light)',
+          textAlign: 'center',
+          fontSize: '0.75rem',
+          color: '#64748B'
+        }}>
+          Restricted administrative access. Data is securely synchronized directly with Cloud Firestore.
         </div>
 
       </div>

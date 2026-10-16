@@ -26,7 +26,7 @@ export function AdminLayout() {
 
   // Protected route check
   if (!user) {
-    return <Navigate to="/admin/login" replace />;
+    return <Navigate to="/admin" replace />;
   }
 
   const navItems = [
@@ -35,8 +35,7 @@ export function AdminLayout() {
     { label: 'Treatments CMS', path: '/admin/services', icon: Stethoscope },
     { label: 'Dentists CMS', path: '/admin/doctors', icon: Users },
     { label: 'FAQ Management', path: '/admin/faqs', icon: HelpCircle },
-    { label: 'Clinic Branding', path: '/admin/clinic-settings', icon: Settings, adminOnly: true },
-    { label: 'Staff & Roles', path: '/admin/team', icon: ShieldAlert, adminOnly: true },
+    { label: 'Clinic Branding & Sync', path: '/admin/clinic-settings', icon: Settings },
   ];
 
   return (
@@ -193,8 +192,8 @@ export function AdminLayout() {
               <div style={{ fontSize: '0.85rem', fontWeight: 600, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                 {user.name}
               </div>
-              <div style={{ fontSize: '0.7rem', color: '#94A3B8', textTransform: 'capitalize' }}>
-                {user.role === 'tenantAdmin' ? 'Tenant Admin' : 'Staff / Reception'}
+              <div style={{ fontSize: '0.7rem', color: '#94A3B8' }}>
+                Administrator
               </div>
             </div>
           </div>
